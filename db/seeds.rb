@@ -1,7 +1,14 @@
+# db/seeds.rb
+
+# Require the Faker gem
 require 'faker'
 require 'json'
 require 'open-uri'
+
+# Define the number of fake profiles you want to create
 NUM_PROFILES = 50
+
+# Create fake users and profiles
 NUM_PROFILES.times do
   # Create a new user
   user = User.create!(
@@ -24,3 +31,4 @@ NUM_PROFILES.times do
     user: user  # Associate the profile with the created user
   )
 end
+puts "Seed data generated successfully!"
