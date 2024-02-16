@@ -1,18 +1,15 @@
-<h1>Here are today's Profiles!</h1>
-
-<h1><%= @profile.name %></h1>
-
-<div class="card" style="width: 18rem;">
-  <img src="..." class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title"><%= @profile.name %></h5>
-    <p><%= @profile.bio %></p>
-    <ul>
-      <li><%= @profile.age%></li>
-      <li><%= @profile.phone_number%></li>
-      <li><%= @profile.email%></li>
-      <li><%= @profile.address%></li>
-    </ul>
-    <a href="#" class="btn btn-primary"> Take a look!</a>
+<div class="container">
+  <div class="row">
+    <% @profiles.each do |profile| %>
+      <div class="col-md-3 mb-4">
+        <div class="profile-cards">
+          <img class="card-img-top" src="<%= profile.profile_picture_url %>" alt="profile-pic" style="width: 100%; height: auto;">
+          <div class="card-body">
+            <h5 class="card-title"><%= profile.name %></h5>
+            <p class="card-text"><%= profile.bio %></p>
+          </div>
+        </div>
+      </div>
+    <% end %>
   </div>
 </div>
