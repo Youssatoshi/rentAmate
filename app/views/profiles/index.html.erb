@@ -2,13 +2,15 @@
   <div class="row">
     <% @profiles.each do |profile| %>
       <div class="col-md-3 mb-4">
-        <div class="profile-cards">
-          <img class="card-img-top" src="<%= profile.profile_picture_url %>" alt="profile-pic" style="width: 100%; height: auto;">
-          <div class="card-body">
+        <div class="card h-100 shadow-sm">
+          <!-- Image now fits inside the card with rounded corners -->
+          <img src="<%= profile.profile_picture_url %>" class="card-img-top" alt="Profile picture of <%= profile.name %>">
+
+          <div class="card-body d-flex flex-column profile-cards">
             <h5 class="card-title"><%= profile.name %></h5>
             <p class="card-text"><%= profile.bio %></p>
+            <%= link_to "View Profile", profile_path(profile), class: "btn btn-primary mt-auto" %>
           </div>
-          <%= link_to "View Profile", profile_path(profile), class: "btn btn-primary" %>
         </div>
       </div>
     <% end %>

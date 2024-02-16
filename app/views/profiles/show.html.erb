@@ -1,7 +1,6 @@
-<h1><%= @profile.name %></h1>
-
-<div>
-  <img src="..." alt="...">
+<div class="container mt-3 flex justify-content center">
+  <h1><%= @profile.name %></h1>
+  <img class="card-img-top" src="<%= @profile.profile_picture_url %>" alt="profile-pic" style="width:20%; height: auto;">
   <div>
     <p><%= @profile.bio %></p>
     <ul>
@@ -9,6 +8,7 @@
       <li><%= @profile.phone_number%></li>
       <li><%= @profile.email%></li>
       <li><%= @profile.address%></li>
+      <li><%= @profile.roles%></li>
     </ul>
     <a href="#" class="btn btn-primary"> Book me!</a>
   </div>
