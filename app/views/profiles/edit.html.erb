@@ -1,0 +1,20 @@
+<h1>Edit Profile</h1>
+
+<%= form_for(@profile) do |f| %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+
+  <!-- Add other fields for bio, phone number, address, profile picture URL, age, etc. -->
+
+  <div class="actions">
+    <%= f.submit 'Update Profile' %>
+  </div>
+<% end %>

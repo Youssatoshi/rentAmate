@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     # Define the root path
     root 'profiles#index'
     get '/profiles/:id', to: 'profiles#show'
+    get '/profiles/:id/edit', to: 'profiles#edit'
+    patch '/profiles/:id', to: 'profiles#update'
 
     # Resourceful routes for Profiles
     resources :profiles do

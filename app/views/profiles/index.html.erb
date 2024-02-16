@@ -8,6 +8,7 @@
             <h5 class="card-title"><%= profile.name %></h5>
             <p class="card-text"><%= profile.bio %></p>
           </div>
+          <%= link_to "View Profile", profile_path(profile), class: "btn btn-primary" %>
         </div>
       </div>
     <% end %>
