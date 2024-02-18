@@ -7,4 +7,5 @@ class Profile < ApplicationRecord
   validates :bio, length: { maximum: 1000 }
   validates :phone_number, presence: true
   validates :age, presence: true
+  validates :roles, presence: true
 end

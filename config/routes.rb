@@ -12,8 +12,6 @@ Rails.application.routes.draw do
   Rails.application.routes.draw do
     # Define the root path
     root 'profiles#index'
-    get '/profiles/:id', to: 'profiles#show'
-
     # Resourceful routes for Profiles
     resources :profiles do
       # Nested resourceful routes for Bookings related to a Profile
