@@ -20,7 +20,7 @@ NUM_PROFILES.times do
   image_data = JSON.parse(URI.open(url).read)
   image_url = image_data['url']
   # Create a new profile associated with the user
-  profile = Profile.create!(
+  @profile = Profile.create!(
     name: Faker::Name.name,
     email: Faker::Internet.email,
     bio: Faker::Lorem.paragraph(sentence_count: 3),
