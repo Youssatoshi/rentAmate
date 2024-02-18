@@ -13,7 +13,7 @@ NUM_PROFILES.times do
   # Create a new user
   user = User.create!(
     email: Faker::Internet.email,
-    password: 'password'  # Set a default password
+    password: 'password' # Set a default password
     # You can add more attributes here if needed
   )
   url = 'https://100k-faces.glitch.me/random-image-url'
