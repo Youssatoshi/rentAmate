@@ -1,6 +1,6 @@
 .navbar-lewagon {
   justify-content: space-between;
-  background: #F8EDEB
+  background: #F8EDEB;
 }
 
 .navbar-lewagon .navbar-collapse {
@@ -8,9 +8,66 @@
 }
 
 .navbar-lewagon .navbar-brand img {
-  width: 40px;
+  width: 50px; /* Adjust this value to make the logo bigger */
+  height: auto; /* This will ensure that the logo maintains its aspect ratio */
 }
 
+
 body {
-  background-color: white;
+  background-color: var(--warm-beige);
+  color: var(--soft-blue);
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  background: white;
+  border-radius: 30px;
+  padding: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.search-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.search-input {
+  border: none;
+  margin-right: 5px;
+  flex-grow: 1;
+}
+
+.search-button {
+  background-color: #ff385c;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 0.5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button i {
+  font-size: 1em;
+}
+
+/* Overriding simple_form generated styles might be necessary */
+input[type='text'] {
+  background: white;
+  border-radius: 30px;
+  box-shadow: none;
+  line-height: normal;
+}
+
+input[type='text']::placeholder {
+  color: #aaa;
+}
+
+/* Ensure inputs are not outlined on focus to maintain style */
+input[type='text']:focus {
+  outline: none;
+  box-shadow: none;
 }

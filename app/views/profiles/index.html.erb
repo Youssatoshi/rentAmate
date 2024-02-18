@@ -1,15 +1,30 @@
+
+<div class="banner-container">
+  <div class="banner-content">
+    <h2>Welcome to Rent A Mate</h2>
+    <p><strong>Connect, Share, Enjoy.</strong> Find the perfect companion for any moment. Explore, engage, and start new adventures today.</p>
+    <a href="/path/to/create/profile" class="btn btn-primary">Join Now | Find Your Mate </a>
+  </div>
+</div>
+
+
+
+
 <div class="container">
   <div class="row">
     <% @profiles.each do |profile| %>
       <div class="col-md-3 mb-4">
         <div class="card h-100 shadow-sm">
-          <!-- Image now fits inside the card with rounded corners -->
-          <img src="<%= profile.profile_picture_url %>" class="card-img-top" alt="Profile picture of <%= profile.name %>">
+          <div class="profile-image-container">
+            <img src="<%= profile.profile_picture_url %>" class="profile-image" alt="Profile picture of <%= profile.name %>">
+          </div>
 
-          <div class="card-body d-flex flex-column profile-cards">
+          <div class="card-body d-flex flex-column">
             <h5 class="card-title"><%= profile.name %></h5>
+            <p class="card-age"><%= profile.age %> years old</p>
             <p class="card-text"><%= profile.bio %></p>
-            <%= link_to "View Profile", profile_path(profile), class: "btn btn-primary mt-auto" %>
+            <p class="card-price"><%= profile.price %> <strong>$</strong> </p>
+            <%= link_to "View Profile", profile_path(profile), class: "btn-view-profile mt-auto" %>
           </div>
         </div>
       </div>

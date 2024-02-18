@@ -1,0 +1,35 @@
+.banner-container {
+  text-align: center;
+  padding: 40px 0;
+  background-image: asset-url('banner.jpg');; // Update this path as needed
+  background-size: contain; // Ensures the image covers the entire container
+  background-repeat: no-repeat;
+  background-position: center center;
+  height: 450px;
+  border-radius: 15px; // Rounds the corners of the container
+  overflow: hidden; // Clips the background image to the container's rounded corners
+  margin: 20px auto; // Example margin for visual separation
+  width: 80%; // Adjust the width as necessary
+  position:relative;
+}
+
+.banner-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  max-width: 500px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color:  #2c343c;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 15px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); // Center in the middle of the banner
+}
