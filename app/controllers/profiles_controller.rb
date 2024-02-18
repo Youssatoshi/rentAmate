@@ -1,5 +1,9 @@
 class ProfilesController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:index, :show]
+  skip_before_action :authenticate_user!, only: [:index, :show, :edit, :update]
+
+  def index
+    @profiles = Profile.all
+  end
 
   def new
     @profile = Profile.new
@@ -16,9 +20,6 @@ class ProfilesController < ApplicationController
 
     end
   end
-  def index
-    @profiles = Profile.all
-  end
 
   def show
     @profile = Profile.find(params[:id])
@@ -30,14 +31,13 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = Profile.find(params[:id])
-    @profile.update(profile_params)
+    @profile.update!(profile_params)
     redirect_to profile_path(@profile)
   end
 
   private
 
   def profile_params
-    params.require(:profile).permit(:name, :email, :bio, :phone_number, :address, :profile_picture_url, :age)
+    params.require(:profile).permit(:name, :email, :bio, :phone_number, :address, :profile_picture_url, :age, :roles, :price)
   end
-
 end

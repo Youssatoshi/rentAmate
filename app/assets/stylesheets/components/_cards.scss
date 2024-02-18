@@ -1,0 +1,23 @@
+.profile-cards {
+  background-color: white
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and shadow */
+  cursor: pointer; /* Indicates the card is interactive */
+  border-radius: 15px; /* Rounded corners for the card */
+  overflow: hidden; /* Ensures contents fit within the rounded corners */
+}
+
+.card:hover {
+  transform: scale(1.03); /* Slightly scale up the card */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Shadow for a "pop" effect */
+}
+
+.card-img-top {
+  object-fit: cover;
+  width: 100%;
+  height: 295 px; /* Adjust height as needed */
+  border-top-left-radius: 15px; /* Rounded top corners */
+  border-top-right-radius: 15px; /* Adjust if you want the entire image rounded */
+}
