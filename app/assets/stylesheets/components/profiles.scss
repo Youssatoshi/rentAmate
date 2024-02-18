@@ -1,0 +1,18 @@
+@import "bootstrap/scss/bootstrap";
+
+// Custom styles for the profile creation form
+.form-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  .field {
+    margin-bottom: 20px;
+  }
+
+  .actions {
+    text-align: center;
+  }
+}

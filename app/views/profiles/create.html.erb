@@ -1,0 +1,11 @@
+<% if @profile.persisted? %>
+  <p>Profile was successfully created.</p>
+  <%= link_to 'View Profile', @profile %>
+<% else %>
+  <p>There was an error creating the profile:</p>
+  <ul>
+    <% @profile.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+    <% end %>
+  </ul>
+<% end %>
