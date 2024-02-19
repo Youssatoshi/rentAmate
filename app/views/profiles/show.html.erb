@@ -1,34 +1,46 @@
-<div class="flex justify-content space-between">
-  <div class="container mt-3 flex justify-content center">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Page Title</title>
+</head>
+<body style="background: linear-gradient(135deg, #F8EDEB, #FFFFFF); margin: 0; padding: 0;">
+  <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; height: 100vh;">
     <h1><%= @profile.name %></h1>
-    <img class="card-img-top" src="<%= @profile.profile_picture_url %>" alt="profile-pic" style="width:20%; height: auto;">
+    <div style="display: flex; justify-content: center;">
+      <img class="card-img-top" src="<%= @profile.profile_picture_url %>" alt="profile-pic" style="width: 300%; height: auto;">
+    </div>
     <div>
       <p><%= @profile.bio %></p>
-      <ul>
-        <li><%= @profile.age%></li>
-        <li><%= @profile.phone_number%></li>
-        <li><%= @profile.email%></li>
-        <li><%= @profile.address%></li>
-        <li><%= @profile.roles%></li>
+      <ul class="list">
+        <li><strong>Age:</strong> <%= @profile.age%></li>
+        <li><strong>Phone Number: </strong><%= @profile.phone_number%></li>
+        <li><strong>Email: </strong><%= @profile.email%></li>
+        <li><strong>Address: </strong><%= @profile.address%></li>
+        <li><strong>Role: </strong><%= @profile.roles%></li>
       </ul>
     </div>
-    <div class="offer-description">
+    <div class="offer-description" style="width: 500px">
       <h3>What I can offer:</h3>
-      <p>This is just a container that should have a list with some icons of what
-        can be offered by booking this person;
-        for example: "You get a charismatic, funny person who isn't afraid of attention"
-      </p>
+      <p>This is just a container that should have a list with some icons of what can be offered by booking this person; for example: "You get a charismatic, funny person who isn't afraid of attention"</p>
     </div>
   </div>
-  <div class="container mt-3 flex justify-content center">
-    <div><h3>Summary:</h3></div>
-    <div><p>Rental Date Selection</p></div>
-    <div><button type="button" class="btn btn-danger">Reserve</button></div>
-    <div><p>You won't be charged yet.</p></div>
+
+  <div id="static-summary" class="container mt-3 flex justify-content-center" style="background: linear-gradient(135deg, #E6A098, #F8EDEB); border: 1px solid #2E2E2E; border-radius: 8px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+    <div style="color: #2E2E2E;"><h3>Summary:</h3></div>
     <div>
-      <h5>Price x 1 day: Total</h5>
-      <h5>Service Fee: Total</h5>
-      <h5>Total:</h5>
+      <p style="color: #2E2E2E;">Rental Date Selection:</p>
+      <input type="date" id="rentalDate" name="rentalDate">
+    </div>
+    <div><button type="button" class="btn btn-secondary">Reserve</button></div>
+    <div><p style="color: #2E2E2E;">You won't be charged yet.</p></div>
+    <div>
+      <h5 style="color: #2E2E2E;">Price x 1 day: <%= number_to_currency(@profile.price) %></h5>
+      <h5 style="color: #2E2E2E;">Service Fee 10%: <%= number_to_currency(@profile.price * 0.10) %></h5>
+      <% total = @profile.price + (@profile.price * 0.10) %>
+      <h5 style="color: #2E2E2E;">Total: <%= number_to_currency(total) %></h5>
     </div>
   </div>
-</div>
+</body>
+</html>

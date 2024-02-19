@@ -1,7 +1,17 @@
-.container {
-  padding-top: 20px;
+.list {
+  list-style-type: none;
+  padding: 0;
 }
-
+#static-summary {
+  position: fixed;
+  top: 50%;
+  right: 100px;
+  transform: translateY(-50%);
+  width: 300px;
+}
+.container {
+  width: 50%;
+}
 .card {
   border-radius: 15px;
   overflow: hidden;
