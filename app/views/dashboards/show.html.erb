@@ -1,0 +1,17 @@
+<!-- app/views/dashboards/show.html.erb -->
+<h1>Dashboard</h1>
+
+<div class="card" style="width: 18rem;">
+  <% if current_user.avatar.attached? %>
+    <%= image_tag current_user.avatar%>
+  <% else %>
+    <%= image_tag "default_avatar.png", class: "card-img-top" %>
+  <% end %>
+  <div class="card-body">
+    <h5 class="card-title">Profile Details</h5>
+    <p class="card-text">Name: <%= @profile.name %></p>
+    <p class="card-text">Bio: <%= @profile.bio %></p>
+    <p class="card-text">Phone Number: <%= @profile.phone_number %></p>
+    <p class="card-text">Age: <%= @profile.age %></p>
+  </div>
+</div>
