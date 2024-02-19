@@ -1,9 +1,10 @@
 
 <div class="banner-container">
   <div class="banner-content">
-    <h2>Welcome to Rent A Mate</h2>
-    <p><strong>Connect, Share, Enjoy.</strong> Find the perfect companion for any moment. Explore, engage, and start new adventures today.</p>
-    <a href="/path/to/create/profile" class="btn btn-primary">Join Now | Find Your Mate </a>
+    <h2><strong> Welcome to Rent A Mate</strong></h2>
+    <h2>Connect, Share, Enjoy.</h2>
+    <p><strong>Find the perfect companion for any moment.</strong></p>
+    <a href="/path/to/create/profile" class="btn btn-primary">Find Your Mate </a>
   </div>
 </div>
 
@@ -23,7 +24,7 @@
             <h5 class="card-title"><%= profile.name %></h5>
             <p class="card-age"><%= profile.age %> years old</p>
             <p class="card-text"><%= profile.bio %></p>
-            <p class="card-price"><%= profile.price %> <strong>$</strong> </p>
+            <p class="card-price"><strong><%= profile.price %> </strong> $/hour</p>
             <%= link_to "View Profile", profile_path(profile), class: "btn-view-profile mt-auto" %>
           </div>
         </div>

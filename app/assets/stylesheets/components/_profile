@@ -1,0 +1,55 @@
+.profile-page {
+  .profile-header {
+    margin-bottom: 20px;
+    .profile-avatar {
+      width: 100%;
+      max-width: 300px; // Adjust to your preference
+      height: auto;
+      border: 1px solid #dee2e6; // Bootstrap's $border-color
+      margin-right: 15px;
+    }
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 10px;
+      .gallery-img {
+        width: 100px; // Adjust to your preference
+        height: 100px; // Adjust to your preference
+        object-fit: cover;
+        margin-right: 10px;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .profile-details {
+    background: #fff;
+    border: 1px solid #dee2e6; // Bootstrap's $border-color
+    border-radius: .25rem;
+    .card-body {
+      .card-title {
+        font-size: 1.75rem;
+      }
+      .card-text {
+        margin-top: 10px;
+      }
+      .roles {
+        font-weight: bold;
+      }
+    }
+  }
+  .booking-form {
+    .card-body {
+      .card-title {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      button {
+        width: 100%;
+        margin-top: 10px;
+      }
+    }
+  }
+}
