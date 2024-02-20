@@ -76,4 +76,6 @@ NUM_PROFILES.times do |index|
     price: Faker::Number.between(from: 67, to: 420),
   )
 end
+Profile.update_all(is_listed: true)
+puts "All profiles have been updated to be listed."
 puts "Seed data generated successfully!"

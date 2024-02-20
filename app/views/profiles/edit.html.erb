@@ -12,7 +12,20 @@
     <%= f.email_field :email %>
   </div>
 
-  <!-- Add other fields for bio, phone number, address, profile picture URL, age, etc. -->
+  <div class="field">
+    <%= f.label :bio %>
+    <%= f.text_field :bio %>
+  </div>
+
+  <div class="field">
+    <%= f.label :roles %>
+    <%= f.text_field :roles %>
+  </div>
+
+  <div class="field">
+    <%= f.label :price %>
+    <%= f.number_field :price %>
+  </div>
 
   <div class="actions">
     <%= f.submit 'Update Profile' %>

@@ -17,9 +17,12 @@
       <div class="col-md-3 mb-4">
         <div class="card h-100 shadow-sm">
           <div class="profile-image-container">
-            <img src="<%= profile.profile_picture_url %>" class="profile-image" alt="Profile picture of <%= profile.name %>">
+            <% if profile.user.avatar.attached? %>
+               <img src="<%= url_for(profile.user.avatar) %>" class="profile-image" alt="Profile picture of <%= profile.name %>">
+            <% else %>
+               <img src="<%= profile.profile_picture_url %>" class="profile-image" alt="Profile picture of <%= profile.name %>">
+           <% end %>
           </div>
-
           <div class="card-body d-flex flex-column">
             <h5 class="card-title"><%= profile.name %></h5>
             <p class="card-age"><%= profile.age %> years old</p>

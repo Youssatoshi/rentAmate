@@ -4,7 +4,11 @@
     <div class="col-lg-8">
       <!-- Profile Image and Gallery -->
       <div class="profile-header mb-3">
-        <img src="<%= @profile.profile_picture_url %>" alt="Avatar" class="profile-avatar img-fluid rounded">
+        <% if @profile.user.avatar.attached? %>
+           <img src="<%= url_for(@profile.user.avatar) %>" alt="Avatar" class="profile-avatar img-fluid rounded">
+        <% else %>
+            <img src="<%= @profile.profile_picture_url %>" alt="Avatar" class="profile-avatar img-fluid rounded">
+        <% end %>
         <div class="gallery">
           <!-- Repeat this img tag for as many images as you want to show using the same 'otherpics.png' -->
           <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
@@ -27,27 +31,26 @@
       </div>
     </div>
     <!-- Booking Form Section -->
-    <div class="col-lg-4">
-      <div class="booking-form card">
-        <div class="card-body">
-          <h2 class="card-title">Book a Session</h2>
-          <form>
-            <div class="form-group">
-              <label for="date">Date</label>
-              <input type="date" class="form-control" id="date">
-            </div>
-            <div class="form-group">
-              <label for="time">Time</label>
-              <input type="time" class="form-control" id="time">
-            </div>
-            <div class="form-group">
-              <label for="notes">Notes</label>
-              <textarea class="form-control" id="notes" rows="3"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
-        </div>
+    <div class="booking-form card">
+      <div class="card-body">
+        <h2 class="card-title">Book a Session</h2>
+        <%= form_with model: [ @profile, @profile.bookings.build ], local: true do |form| %>
+          <div class="form-group">
+            <%= form.label :start_time, "Date and Time" %>
+            <%= form.datetime_local_field :start_time, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :end_time, "End Time" %>
+            <%= form.datetime_local_field :end_time, class: "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :notes %>
+            <%= form.text_area :notes, class: "form-control", rows: 3 %>
+          </div>
+
+          <%= form.submit "Submit", class: "btn btn-primary" %>
+        <% end %>
       </div>
     </div>
-  </div>
-</div>

@@ -1,0 +1,73 @@
+/* Overall background and font colors */
+body {
+  background-color: white;
+  color: #2E2E2E;
+  font-family: Arial, sans-serif;
+}
+
+/* Centering and animating the form container */
+.form-container {
+  background-color: #FFFFFF;
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px; /* Increased border-radius */
+  animation: fadeIn 1s;
+}
+
+/* Ensure uniform input sizes and style adjustments */
+.form-inputs input,
+.form-inputs textarea,
+.form-actions input,
+.form-inputs input[type="file"] { /* Ensuring file input is also styled consistently */
+  width: 100%; /* Adjusted for uniformity */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #E6A098;
+  border-radius: 4px;
+}
+
+.form-inputs label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+/* Nested fields styling */
+.nested-fields {
+  margin-left: 20px;
+}
+
+/* Button styling for uniformity and placement */
+.form-actions input[type="submit"],
+.form-actions .login-button { /* Assuming you add a login button or link with this class */
+  background-color: #E6A098;
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 20px;
+  display: block; /* Makes it full width */
+  width: calc(100% - 20px); /* Adjust width to match inputs */
+  margin: 0 auto 15px auto; /* Center align and add margin at bottom */
+  text-align: center;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.form-actions input[type="submit"]:hover,
+.form-actions .login-button:hover { /* Hover effect for both buttons and links */
+  background-color: #d98976;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Adjust the form title */
+h2 {
+  text-align: center;
+  color: #2E2E2E;
+}

@@ -10,10 +10,15 @@ Rails.application.routes.draw do
   root 'profiles#index'
 
   # Resourceful routes for Profiles
-  resources :profiles, only: [:index, :show] do
-    # Nested resourceful routes for Bookings related to a Profile
-    resources :bookings, only: [:new, :create]
+  resources :profiles, only: [:index, :show, :edit, :update, :destroy] do
+    member do
+      patch :toggle_list
+    end
+    resources :bookings, only: [:new, :create] do
+      patch 'cancel', on: :member
+    end
   end
+
 
   # User-specific routes for Bookings and a custom dashboard route
   scope '/user' do
