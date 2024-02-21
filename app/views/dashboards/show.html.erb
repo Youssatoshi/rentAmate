@@ -7,7 +7,7 @@
         <div class="card-body">
           <h2 class="card-title"><%= current_user.profile.name %></h2>
           <p class="card-text"><%= current_user.profile.bio %></p>
-          <div class="profile-details mt-4">
+          <div class="profile-details mt-4" style="background-color: #F8EDEB;">
             <p><strong>Phone:</strong> <%= current_user.profile.phone_number %></p>
             <p><strong>Age:</strong> <%= current_user.profile.age %></p>
             <p><strong>Price:</strong> <%= number_to_currency(current_user.profile.price) %></p>
@@ -24,8 +24,8 @@
     </div>
 
     <!-- Bookings Section -->
-   <div class="col-md-8">
-      <div class="bookings-section mb-4">
+        <div class="col-md-8">
+      <div class="bookings-section mb-4" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: #F8EDEB;">
         <h3>My Bookings</h3>
         <% @bookings.each do |booking| %>
           <div class="card mb-3">
@@ -48,7 +48,7 @@
       </div>
 
       <!-- Incoming Bookings Section -->
-      <div class="incoming-bookings-section mb-4">
+      <div class="incoming-bookings-section mb-4" style="border: 1px solid #ccc; border-radius: 5px; padding: 10px; background-color: #F8EDEB;">
         <h3>Incoming Bookings</h3>
         <% @incoming_bookings.each do |booking| %>
           <div class="card mb-3">
@@ -71,3 +71,4 @@
       </div>
     </div>
   </div>
+</div>
