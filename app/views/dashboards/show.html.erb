@@ -24,31 +24,44 @@
     </div>
 
   <div class="row">
-    <div class="col-md-8">
-      <div class="bookings-section mb-4">
-        <h3>My Bookings</h3>
-        <% @bookings.each do |booking| %>
-          <div class="card mb-3">
-            <div class="card-body d-flex align-items-center">
-              <%= image_tag booking.profile.user.avatar.attached? ? booking.profile.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
-              <div class="flex-grow-1">
-                <h5 class="card-title mb-0">Booking with <%= booking.profile.name %></h5>
-                <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
-                <p class="card-text mb-0"><%= booking.notes %></p>
-              </div>
-              <div>
-                <!-- Cancel button for my bookings if they are accepted -->
-                <% if booking.accepted? %>
-                  <%= link_to 'cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
-                <% end %>
-              </div>
+    <div class="bookings-section mb-4">
+      <h3>My Bookings</h3>
+      <% @bookings.each do |booking| %>
+        <div class="card mb-3 <%= 'rejected-booking' if booking.rejected? %>">
+          <div class="card-body d-flex align-items-center">
+            <%= image_tag booking.profile.user.avatar.attached? ? booking.profile.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+            <div class="flex-grow-1">
+              <h5 class="card-title mb-0">Booking with <%= booking.profile.name %></h5>
+              <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+              <p class="card-text"><%= booking.notes %></p>
+            </div>
+            <div>
+              <% if booking.pending? %>
+                <button type="Pending" class="btn btn-warning">Pending....</button>
+              <% elsif booking.accepted? %>
+                <button type="button" class="btn btn-success">Confirmed</button>
+                <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
+              <%elsif booking.canceled?%>
+                <button type="button" class="btn btn-success">cancelled</button>
+              <% elsif booking.rejected? %>
+                <button type="button" class="btn btn-danger">Rejected</button>
+                <!-- Assuming a method to 'hide' or 'remove' the booking without deleting it from the database -->
+                <%= link_to 'Hide', "#", class: 'btn btn-outline-secondary ml-2', data: { action: "click->hide-booking#hide" } %>
+              <% end %>
             </div>
           </div>
-        <% end %>
-        <% if @bookings.empty? %>
-          <p>You have no bookings.</p>
-        <% end %>
-      </div>
+          <% if booking.rejected? %>
+            <div class="card-footer text-muted">
+              This booking has been rejected. You may choose to hide it from your view.
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+      <% if @bookings.empty? %>
+        <p>You have no bookings.</p>
+      <% end %>
+    </div>
+
 
       <!-- Incoming Bookings Section -->
       <div class="incoming-bookings-section mb-4">
@@ -66,6 +79,15 @@
                 <!-- Accept and Reject buttons for incoming bookings -->
                 <%= link_to 'Accept Booking', accept_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
                 <%= link_to 'Reject Booking', reject_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
+                <%if booking.status == "accepted" %>
+                    <button type="button" class="btn btn-success">Confirmed</button>
+                    <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
+                <%elsif booking.canceled?%>
+                    <button type="button" class="btn btn-success">cancelled</button>
+                <% elsif booking.rejected? %>
+                    <button type="button" class="btn btn-danger">Rejected</button>
+                <%end%>
+
               </div>
             </div>
           </div>

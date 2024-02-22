@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     member do
       patch :toggle_list
     end
-    resources :bookings, only: [:index, :new, :create, :show, :update] do
+    resources :bookings, only: [:index, :new, :create, :show, :update, :destroy] do
       member do
         patch :accept
         patch :reject

@@ -54,8 +54,6 @@ class BookingsController < ApplicationController
     update_status('accepted')
   end
 
-
-
   def reject
     update_status('rejected')
   end
