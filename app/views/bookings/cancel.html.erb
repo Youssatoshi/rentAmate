@@ -1,0 +1,4 @@
+<%= form_for [@profile, @booking], url: cancel_profile_booking_path(profile_id: @profile.id, id: @booking.id), method: :patch do |f| %>
+  <!-- Any form fields or information you want to display -->
+  <%= f.submit 'Cancel Booking' %>
+<% end %>

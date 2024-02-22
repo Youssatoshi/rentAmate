@@ -23,8 +23,8 @@
       </div>
     </div>
 
-    <!-- Bookings Section -->
-   <div class="col-md-8">
+  <div class="row">
+    <div class="col-md-8">
       <div class="bookings-section mb-4">
         <h3>My Bookings</h3>
         <% @bookings.each do |booking| %>
@@ -37,7 +37,10 @@
                 <p class="card-text mb-0"><%= booking.notes %></p>
               </div>
               <div>
-                <%= button_to "Cancel Appointment", cancel_profile_booking_path(booking.profile, booking), method: :patch, data: { confirm: "Are you sure you want to cancel this appointment?" }, class: "btn btn-custom list-my-profile" %>
+                <!-- Cancel button for my bookings if they are accepted -->
+                <% if booking.accepted? %>
+                  <%= link_to 'cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
+                <% end %>
               </div>
             </div>
           </div>
@@ -60,7 +63,9 @@
                 <p class="card-text mb-0"><%= booking.notes %></p>
               </div>
               <div>
-                <%= button_to "Cancel Appointment", cancel_profile_booking_path(booking.profile, booking), method: :patch, data: { confirm: "Are you sure you want to cancel this appointment?" }, class: "btn btn-custom list-my-profile" %>
+                <!-- Accept and Reject buttons for incoming bookings -->
+                <%= link_to 'Accept Booking', accept_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
+                <%= link_to 'Reject Booking', reject_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
               </div>
             </div>
           </div>
@@ -71,3 +76,4 @@
       </div>
     </div>
   </div>
+</div>

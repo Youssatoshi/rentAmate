@@ -1,7 +1,6 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-
   def destroy
     super do |resource|
       sign_out(resource_name) # Ensure the user is signed out
