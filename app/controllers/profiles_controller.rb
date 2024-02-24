@@ -39,13 +39,14 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
     if @profile.roles.present? && @profile.price.present?
       @profile.update(is_listed: !@profile.is_listed)
-      message = 'Your profile listing has been updated.'
-      redirect_to root_path, notice: message
+      flash[:notice] = 'Your profile listing has been updated.'
+      redirect_to user_dashboard_path
     else
-      message = 'You need to set both roles and price before listing your profile.'
-      redirect_to user_dashboard_path, notice: message
+      flash[:alert] = 'You need to set both roles and price before listing your profile.'
+      redirect_to user_dashboard_path
     end
   end
+
 
   def destroy
     @profile = Profile.find(params[:id])

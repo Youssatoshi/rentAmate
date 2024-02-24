@@ -10,3 +10,22 @@
   }
 
 }
+
+.buttons{
+  display: flex;
+  align-items: center;
+  margin-top: 30px;
+}
+.buttons .btn{
+  color: #fff;
+  text-decoration: none;
+  margin: 0 20px;
+  padding: 8px 25px;
+  border-radius: 25px;
+  font-size: 18px;
+  white-space: nowrap;
+  background: #2e2e2e
+}
+.buttons .btn:hover{
+  background-color: #E6A098;
+}

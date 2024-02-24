@@ -1,101 +1,216 @@
-<div class="container mt-5">
-  <!-- Profile Section -->
-  <div class="row">
-    <div class="col-md-4 mb-4">
-      <div class="card text-center">
-        <%= image_tag current_user.avatar.attached? ? current_user.avatar : "default_avatar.png", class: "rounded-circle img-fluid" %>
-        <div class="card-body">
-          <h2 class="card-title"><%= current_user.profile.name %></h2>
-          <p class="card-text"><%= current_user.profile.bio %></p>
-          <div class="profile-details mt-4">
-            <p><strong>Phone:</strong> <%= current_user.profile.phone_number %></p>
-            <p><strong>Age:</strong> <%= current_user.profile.age %></p>
-            <p><strong>Price:</strong> <%= number_to_currency(current_user.profile.price) %></p>
-            <p><strong>Roles:</strong> <%= current_user.profile.roles %></p>
-            <p><strong>Listed:</strong> <%= @profile.is_listed ? 'Yes' : 'No' %></p>
-          </div>
-          <div class="profile-actions mt-4">
-            <%= link_to "List My Profile", toggle_list_profile_path(@profile), method: :patch, data: { turbo_method: :patch ,turbo_confirm: "Are you sure you want to change your profile listing?" }, class: "btn btn-custom list-my-profile" %>
-            <%= link_to "Edit Profile", edit_profile_path(@profile), class: "btn btn-custom edit-profile" %>
-            <%= link_to "Delete Profile", profile_path(@profile), method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, class: "btn btn-custom delete-profile"  %>
-          </div>
+<section style="background-color: #FFFFFF;">
+	<div class="container py-5">
+		<div class="row">
+			<div class="col-lg-4">
+				<div class="card mb-4">
+					<div class="card-body text-center"  style="background-color: #F8F9FA !important;">
+						<!-- Edit button -->
+						<div class="edit-icon" style="position: absolute; top: 15px; right: 15px;">
+							<button type="button" class="btn btn-light btn-sm"><%= link_to edit_profile_path(@profile), class: "btn btn-custom edit-profile btn-light btn-sm" do %><i class="fa-solid fa-pen-to-square"></i><% end %></button>
+						</div>
+						<!-- Avatar and content -->
+						<div class="avatar-wrapper" style="background-color: #FFFFFF; border-radius: 50%; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); width: 245px; height: 245px; margin: 0 auto; display: flex; align-items: center; justify-content: center;">
+							<%= image_tag current_user.avatar.attached? ? current_user.avatar : "default_avatar.png", class: "rounded-circle img-fluid", style: "max-width: 240px; max-height: 240px;" %>
+						</div>
+						<h5 class="my-4">
+							<%= current_user.profile.name %>
+						</h5>
+						<p class="text-muted mb-3">
+							<%= current_user.profile.bio %>
+						</p>
+						<div class="d-flex justify-content-center gap-3 text-muted mb-1">
+							<div>
+								<strong><i class="fa-solid fa-masks-theater"></i> :</strong>
+								<%= current_user.profile.roles %>
+							</div>
+							<div>
+								<strong><i class="fa-solid fa-tag"></i> :</strong>
+								<%= number_to_currency(current_user.profile.price) %>
+							</div>
+							<div>
+								<strong>
+									<% if @profile.is_listed %>
+									<i class="fa-solid fa-eye"></i>
+									<% else %>
+									<i class="fa-solid fa-eye-slash"></i>
+									<% end %>
+								</strong>
+								<%= @profile.is_listed ? 'Yes' : 'No' %>
+							</div>
+						</div>
+						<div class="d-flex justify-content-center mt-2">
+							<div class="buttons">
+								<%= link_to (@profile.is_listed ? "Listed" : "List Me!"), toggle_list_profile_path(@profile), method: :patch, data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to change your profile listing?" }, class: "btn" %>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-4">
+				<!-- Small top boxes -->
+				<div class="row mb-2">
+					<div class="col-6">
+						<div class="card" style="height: 100px; background-color: #F8F9FA; border: 1px solid #ccc;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-piggy-bank fa-3x me-3 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h3 class="mb-4">$785</h3>
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+								Total payout this month
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="card" style="height: 100px; background-color: #F8F9FA; border: 1px solid #ccc;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-clock fa-3x me-3 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h3 class="mb-4">18:20</h3>
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+								Hours booked
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+				</div>
+				<div class="row mb-2">
+					<div class="col-6">
+						<div class="card" style="height: 100px; background-color: #F8F9FA; border: 1px solid #ccc;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-magnifying-glass fa-3x me-3 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h3 class="mb-4">1256</h3>
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+								Profile searches
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="card" style="height: 100px; background-color: #F8F9FA; border: 1px solid #ccc;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-masks-theater fa-3x me-3 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h4 class="mb-4">Brother</h4>
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+								Most booked role
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+				</div>
+				<!-- Large middle box -->
+        <div class="card large-box mt-4" style="height: 265px; background-color: #F8F9FA; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <%= image_tag 'analytics.png', alt: 'Analytics image', style: 'max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 15px;' %>
         </div>
-      </div>
-    </div>
-
-  <div class="row">
-    <div class="bookings-section mb-4">
-      <h3>My Bookings</h3>
-      <% @bookings.each do |booking| %>
-        <div class="card mb-3 <%= 'rejected-booking' if booking.rejected? %>">
-          <div class="card-body d-flex align-items-center">
-            <%= image_tag booking.profile.user.avatar.attached? ? booking.profile.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
-            <div class="flex-grow-1">
-              <h5 class="card-title mb-0">Booking with <%= booking.profile.name %></h5>
-              <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
-              <p class="card-text"><%= booking.notes %></p>
-            </div>
-            <div>
-              <% if booking.pending? %>
-                <button type="Pending" class="btn btn-warning">Pending....</button>
-              <% elsif booking.accepted? %>
-                <button type="button" class="btn btn-success">Confirmed</button>
-                <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
-              <%elsif booking.canceled?%>
-                <button type="button" class="btn btn-success">cancelled</button>
-              <% elsif booking.rejected? %>
-                <button type="button" class="btn btn-danger">Rejected</button>
-                <!-- Assuming a method to 'hide' or 'remove' the booking without deleting it from the database -->
-                <%= link_to 'Hide', "#", class: 'btn btn-outline-secondary ml-2', data: { action: "click->hide-booking#hide" } %>
-              <% end %>
-            </div>
-          </div>
-          <% if booking.rejected? %>
-            <div class="card-footer text-muted">
-              This booking has been rejected. You may choose to hide it from your view.
-            </div>
-          <% end %>
-        </div>
-      <% end %>
-      <% if @bookings.empty? %>
-        <p>You have no bookings.</p>
-      <% end %>
-    </div>
-
-
-      <!-- Incoming Bookings Section -->
-      <div class="incoming-bookings-section mb-4">
-        <h3>Incoming Bookings</h3>
-        <% @incoming_bookings.each do |booking| %>
-          <div class="card mb-3">
-            <div class="card-body d-flex align-items-center">
-              <%= image_tag booking.user.avatar.attached? ? booking.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
-              <div class="flex-grow-1">
-                <h5 class="card-title mb-0">Booking from <%= booking.user.email %></h5>
-                <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
-                <p class="card-text mb-0"><%= booking.notes %></p>
+			</div>
+			<!-- Third column for the large box -->
+			<div class="col-lg-4">
+				<!-- Full-height box -->
+				<div class="card large-box" style="height: 500px; background-color: #F8F9FA; border: 1px solid #ccc;"></div>
+			</div>
+			<div class="container py-2">
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="card">
+							<div class="card-body text-center"  style="height: auto; background-color: #F8F9FA !important;">
+              <div class="bookings-section mb-4">
+                    <h3>My Bookings</h3>
+                    <% @bookings.each do |booking| %>
+                      <div class="card mb-3 <%= 'rejected-booking' if booking.rejected? %>">
+                        <div class="card-body d-flex align-items-center">
+                          <%= image_tag booking.profile.user.avatar.attached? ? booking.profile.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                          <div class="flex-grow-1">
+                            <h5 class="card-title mb-0">Booking with <%= booking.profile.name %></h5>
+                            <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                            <p class="card-text"><%= booking.notes %></p>
+                          </div>
+                          <div>
+                            <% if booking.pending? %>
+                              <button type="Pending" class="btn btn-warning">Pending....</button>
+                            <% elsif booking.accepted? %>
+                              <button type="button" class="btn btn-success">Confirmed</button>
+                              <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
+                            <%elsif booking.canceled?%>
+                              <button type="button" class="btn btn-success">cancelled</button>
+                            <% elsif booking.rejected? %>
+                              <button type="button" class="btn btn-danger">Rejected</button>
+                              <!-- Assuming a method to 'hide' or 'remove' the booking without deleting it from the database -->
+                              <%= link_to 'Hide', "#", class: 'btn btn-outline-secondary ml-2', data: { action: "click->hide-booking#hide" } %>
+                            <% end %>
+                          </div>
+                        </div>
+                        <% if booking.rejected? %>
+                          <div class="card-footer text-muted">
+                            This booking has been rejected. You may choose to hide it from your view.
+                          </div>
+                        <% end %>
+                      </div>
+                    <% end %>
+                    <% if @bookings.empty? %>
+                      <p>You have no bookings.</p>
+                    <% end %>
+                  </div>
               </div>
-              <div>
-                <!-- Accept and Reject buttons for incoming bookings -->
-                <%= link_to 'Accept Booking', accept_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
-                <%= link_to 'Reject Booking', reject_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
-                <%if booking.status == "accepted" %>
-                    <button type="button" class="btn btn-success">Confirmed</button>
-                    <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
-                <%elsif booking.canceled?%>
-                    <button type="button" class="btn btn-success">cancelled</button>
-                <% elsif booking.rejected? %>
-                    <button type="button" class="btn btn-danger">Rejected</button>
-                <%end%>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="card">
+							<div class="card-body text-center"  style="height: auto; background-color: #F8F9FA !important;">
+              <div class="incoming-bookings-section mb-4">
+                  <h3>Incoming Bookings</h3>
+                  <% @incoming_bookings.each do |booking| %>
+                    <div class="card mb-3">
+                      <div class="card-body d-flex align-items-center">
+                        <%= image_tag booking.user.avatar.attached? ? booking.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                        <div class="flex-grow-1">
+                          <h5 class="card-title mb-0">Booking from <%= booking.user.email %></h5>
+                          <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                          <p class="card-text mb-0"><%= booking.notes %></p>
+                        </div>
+                        <div>
+                          <!-- Accept and Reject buttons for incoming bookings -->
+                          <%= link_to 'Accept Booking', accept_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
+                          <%= link_to 'Reject Booking', reject_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
+                          <%if booking.status == "accepted" %>
+                              <button type="button" class="btn btn-success">Confirmed</button>
+                              <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
+                          <%elsif booking.canceled?%>
+                              <button type="button" class="btn btn-success">cancelled</button>
+                          <% elsif booking.rejected? %>
+                              <button type="button" class="btn btn-danger">Rejected</button>
+                          <%end%>
 
+                        </div>
+                      </div>
+                    </div>
+                  <% end %>
+                  <% if @incoming_bookings.empty? %>
+                    <p>No incoming bookings.</p>
+                  <% end %>
+                </div>
               </div>
-            </div>
-          </div>
-        <% end %>
-        <% if @incoming_bookings.empty? %>
-          <p>No incoming bookings.</p>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
