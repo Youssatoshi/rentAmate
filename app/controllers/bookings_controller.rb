@@ -8,8 +8,9 @@ class BookingsController < ApplicationController
   end
 
   def create
+    # Builds a new booking associated with @profile, with the current user as the sender
     @booking = @profile.bookings.build(booking_params.merge(user: current_user))
-
+    @booking.sender_id = current_user.id
     if @booking.save
       redirect_to user_dashboard_path, notice: 'Booking was successfully created.'
     else
@@ -17,6 +18,7 @@ class BookingsController < ApplicationController
       render 'profiles/show'
     end
   end
+
 
   def show
     @profile = Profile.find(params[:id])
@@ -58,10 +60,17 @@ class BookingsController < ApplicationController
     update_status('rejected')
   end
 
+# app/controllers/bookings_controller.rb
   def cancel
-    @profile = Profile.find(params[:profile_id])
     @booking = Booking.find(params[:id])
-    update_status('canceled')
+    # Check if the current_user is either the sender or the recipient of the booking
+    if @booking.sender_id == current_user.id || @booking.recipient_id == current_user.id
+      # Logic to cancel the booking
+      @booking.update(status: 'canceled')
+      redirect_to user_dashboard_path, notice: 'Booking was successfully canceled.'
+    else
+      redirect_to user_dashboard_path, alert: 'You are not authorized to cancel this booking.'
+    end
   end
 
   private
@@ -71,7 +80,7 @@ class BookingsController < ApplicationController
   end
 
   def booking_params
-    params.require(:booking).permit(:start_time, :end_time, :notes)
+    params.require(:booking).permit(:start_time, :end_time, :notes, :recipient_id)
   end
 
   def update_status(new_status)

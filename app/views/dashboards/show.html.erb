@@ -118,7 +118,10 @@
 				</div>
 				<!-- Large middle box -->
         <div class="card large-box mt-4" style="height: 265px; background-color: #F8F9FA; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-           <%= pie_chart @bookings_by_status, height: '500px' %>
+           <%= pie_chart @bookings_by_status,
+              colors: ["#d4cccb", "#2E2E2E", "#e67467", "#E6A098",  "#F8EDEB"],
+              height: '530px', width: '530px'%>
+
 
         </div>
 			</div>
@@ -129,87 +132,328 @@
 			</div>
 			<div class="container py-2">
 				<div class="row">
-					<div class="col-lg-6">
-						<div class="card">
-							<div class="card-body text-center"  style="height: auto; background-color: #F8F9FA !important;">
-              <div class="bookings-section mb-4">
-                    <h3>My Bookings</h3>
-                    <% @bookings.each do |booking| %>
-                      <div class="card mb-3 <%= 'rejected-booking' if booking.rejected? %>">
-                        <div class="card-body d-flex align-items-center">
-                          <%= image_tag booking.profile.user.avatar.attached? ? booking.profile.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
-                          <div class="flex-grow-1">
-                            <h5 class="card-title mb-0">Booking with <%= booking.profile.name %></h5>
-                            <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
-                            <p class="card-text"><%= booking.notes %></p>
-                          </div>
-                          <div>
-                            <% if booking.pending? %>
-                              <button type="Pending" class="btn btn-warning">Pending....</button>
-                            <% elsif booking.accepted? %>
-                              <button type="button" class="btn btn-success">Confirmed</button>
-                              <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
-                            <%elsif booking.canceled?%>
-                              <button type="button" class="btn btn-success">cancelled</button>
-                            <% elsif booking.rejected? %>
-                              <button type="button" class="btn btn-danger">Rejected</button>
-                              <!-- Assuming a method to 'hide' or 'remove' the booking without deleting it from the database -->
-                              <%= link_to 'Hide', "#", class: 'btn btn-outline-secondary ml-2', data: { action: "click->hide-booking#hide" } %>
-                            <% end %>
-                          </div>
-                        </div>
-                        <% if booking.rejected? %>
-                          <div class="card-footer text-muted">
-                            This booking has been rejected. You may choose to hide it from your view.
-                          </div>
-                        <% end %>
-                      </div>
-                    <% end %>
-                    <% if @bookings.empty? %>
-                      <p>You have no bookings.</p>
-                    <% end %>
-                  </div>
-              </div>
-						</div>
-					</div>
-					<div class="col-lg-6">
-						<div class="card">
-							<div class="card-body text-center"  style="height: auto; background-color: #F8F9FA !important;">
-              <div class="incoming-bookings-section mb-4">
-                  <h3>Incoming Bookings</h3>
-                  <% @incoming_bookings.each do |booking| %>
-                    <div class="card mb-3">
-                      <div class="card-body d-flex align-items-center">
-                        <%= image_tag booking.user.avatar.attached? ? booking.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
-                        <div class="flex-grow-1">
-                          <h5 class="card-title mb-0">Booking from <%= booking.user.email %></h5>
-                          <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
-                          <p class="card-text mb-0"><%= booking.notes %></p>
-                        </div>
-                        <div>
-                          <!-- Accept and Reject buttons for incoming bookings -->
-                          <%= link_to 'Accept Booking', accept_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
-                          <%= link_to 'Reject Booking', reject_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-primary' %>
-                          <%if booking.status == "accepted" %>
-                              <button type="button" class="btn btn-success">Confirmed</button>
-                              <%= link_to 'Cancel Booking', cancel_booking_form_path(profile_id: @profile.id, id: booking.id), class: 'btn btn-danger ml-2' %>
-                          <%elsif booking.canceled?%>
-                              <button type="button" class="btn btn-success">cancelled</button>
-                          <% elsif booking.rejected? %>
-                              <button type="button" class="btn btn-danger">Rejected</button>
-                          <%end%>
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center" style="background-color: #F8F9FA !important;">
 
+                        <div class="bookings-section mb-4">
+
+                            <h3 class="my-3"><i class="fa-solid fa-calendar-days fax3 me-2"></i> My Bookings</h3>
+                            <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                            <!-- Pending Bookings Section -->
+                            <div class="pending-bookings">
+                              <%# Directly query pending bookings where the current_user is the sender %>
+                              <% pending_bookings = Booking.where(sender_id: current_user.id, status: 'pending') %>
+
+                              <% if pending_bookings.any? %>
+                                <h4 class="mt-3 mb-4"><i class="fa-solid fa-clock me-3"></i>Pending Bookings</h4>
+                                <div class="bookings-scrollable">
+                                  <% pending_bookings.each do |booking| %>
+                                    <%# Fetch the recipient's user profile using recipient_id %>
+                                    <% recipient = User.find_by(id: booking.recipient_id) %>
+                                    <div class="card mb-3">
+                                      <div class="card-body d-flex align-items-center">
+                                        <% if recipient.present? %>
+                                          <%= image_tag recipient.avatar.attached? ? recipient.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                          <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">Booking with <%= recipient.profile.name %></h5>
+                                            <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                            <p class="card-text"><%= booking.notes %></p>
+                                          </div>
+                                        <% else %>
+                                          <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">Recipient details unavailable</h5>
+                                          </div>
+                                        <% end %>
+                                        <i class="fa-solid fa-hourglass-end me-2"></i>
+                                      </div>
+                                    </div>
+                                  <% end %>
+                                </div>
+                              <% end %>
+                            </div>
+
+
+
+
+
+
+
+
+                            <!-- Accepted Bookings Section -->
+                            <div class="accepted-bookings">
+                              <% accepted_bookings = Booking.where(sender_id: current_user.id, status: 'accepted') %>
+
+                              <% if accepted_bookings.any? %>
+                                <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                                <h4 class="mt-4 mb-4"><i class="fa-solid fa-circle-check me-3"></i>Accepted Bookings</h4>
+                                <div class="bookings-scrollable">
+                                  <% accepted_bookings.each do |booking| %>
+                                    <% recipient = User.find_by(id: booking.recipient_id) %>
+                                    <% if recipient %>
+                                      <div class="card mb-3">
+                                        <div class="card-body d-flex align-items-center">
+                                          <%= image_tag recipient.avatar.attached? ? recipient.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                          <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">Booking with <%= recipient.profile.name %></h5>
+                                            <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                            <p class="card-text"><%= booking.notes %></p>
+                                          </div>
+                                          <div>
+                                            <span>
+                                              <%= link_to cancel_booking_form_path(profile_id: @profile.id, id: booking.id) do %>
+                                                <i class="fas fa-ban fax2 me-3" style='color: red; cursor: pointer;'></i>
+                                              <% end %>
+                                            </span>
+                                          </div>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                          This booking has been accepted, you can still cancel it.
+                                        </div>
+                                      </div>
+                                    <% else %>
+                                      <p></p>
+                                    <% end %>
+                                  <% end %>
+                                </div>
+                              <% else %>
+                                <p></p>
+                              <% end %>
+                            </div>
+
+                            <!-- Cancelled Bookings Section -->
+
+                            <!-- Cancelled Bookings Section -->
+                            <div class="cancelled-bookings">
+                              <% cancelled_bookings = Booking.where(sender_id: current_user.id, status: 'canceled') %>
+
+                              <% if cancelled_bookings.any? %>
+                                <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                                <h4 class="mt-4 mb-4"><i class="fa-solid fa-ban me-3"></i>Cancelled Bookings</h4>
+                                <div class="bookings-scrollable">
+                                  <% cancelled_bookings.each do |booking| %>
+                                    <% recipient = User.find_by(id: booking.recipient_id) %>
+                                    <% if recipient %>
+                                      <div class="card mb-3">
+                                        <div class="card-body d-flex align-items-center">
+                                          <%= image_tag recipient.avatar.attached? ? recipient.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                          <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">Booking with <%= recipient.profile.name %></h5>
+                                            <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                            <p class="card-text"><%= booking.notes %></p>
+                                          </div>
+                                            <div>
+                                              <span><i class="fas fa-ban mx-2"></i></span>
+                                            </div>
+                                          <!-- The cancel action may not be relevant for cancelled bookings, so this section is omitted -->
+                                        </div>
+                                      </div>
+                                    <% else %>
+                                      <p></p>
+                                    <% end %>
+                                  <% end %>
+                                </div>
+                              <% else %>
+                                <p></p>
+                              <% end %>
+                            </div>
+
+                            <!-- Rejected Bookings Section -->
+                            <!-- Rejected Bookings Section -->
+                            <div class="rejected-bookings">
+                              <% rejected_bookings = Booking.where(sender_id: current_user.id, status: 'rejected') %>
+
+                              <% if rejected_bookings.any? %>
+                                <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                                <h4 class="mt-4 mb-4"><i class="fa-solid fa-circle-xmark me-3"></i>Rejected Bookings</h4>
+                                <div class="bookings-scrollable">
+                                  <% rejected_bookings.each do |booking| %>
+                                    <% recipient = User.find_by(id: booking.recipient_id) %>
+                                    <% if recipient %>
+                                      <div class="card mb-3">
+                                        <div class="card-body d-flex align-items-center">
+                                          <%= image_tag recipient.avatar.attached? ? recipient.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                          <div class="flex-grow-1">
+                                            <h5 class="card-title mb-0">Booking with <%= recipient.profile.name %></h5>
+                                            <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                            <p class="card-text"><%= booking.notes %></p>
+                                          </div>
+                                          <div>
+                                            <span><i class="fa-regular fa-circle-xmark mx-2"></i></span>
+                                          </div>
+                                        </div>
+
+                                        <div class="card-footer text-muted">
+                                          This booking has been rejected.
+                                        </div>
+                                      </div>
+                                    <% else %>
+                                      <p></p>
+                                    <% end %>
+                                  <% end %>
+                                </div>
+                              <% else %>
+                                <p></p>
+                              <% end %>
+                            </div>
+
+
+                            <% if current_user.profile.bookings.empty? %>
+                                <div style="display: flex; justify-content:center; align-items: center;">
+                                  <i class="fa-solid fa-face-sad-tear me-3 fax3" style="font-size: 35px;"></i>
+                                  <h3>You have no bookings.</h3>
+                                </div>
+                            <% end %>
                         </div>
-                      </div>
                     </div>
-                  <% end %>
-                  <% if @incoming_bookings.empty? %>
-                    <p>No incoming bookings.</p>
-                  <% end %>
                 </div>
-              </div>
-						</div>
-					</div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-body text-center" style="height: auto; background-color: #F8F9FA !important;">
+                        <div class="incoming-bookings-section mb-4">
+                            <h3 class="my-3"><i class="fa-solid fa-inbox me-3"></i>Incoming Bookings</h3>
+
+
+                            <!-- Pending Bookings Section -->
+                            <div class="pending-bookings">
+                                <% if  @incoming_bookings.any?(&:pending?) %>
+                                    <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                                    <h4 class="mt-3 mb-4"><i class="fa-solid fa-clock me-3"></i>Pending Incoming Bookings</h4>
+                                    <div class="bookings-scrollable">
+                                        <% @incoming_bookings.select(&:pending?).each do |booking| %>
+                                            <div class="card mb-3">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <%= image_tag booking.user.avatar.attached? ? booking.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                                    <div class="flex-grow-1">
+                                                        <h5 class="card-title mb-0">Booking from <%= booking.user.profile.name %></h5>
+                                                        <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                                        <p class="card-text"><%= booking.notes %></p>
+                                                    </div>
+                                                    <div>
+                                                        <span>
+                                                          <div class="accept-reject-icons">
+                                                              <%= link_to accept_booking_form_path(profile_id: @profile.id, id: booking.id) do %>
+                                                                  <i class="fa-solid fa-circle-check larger-icon" style="color: green; text-decoration: none;"></i>
+                                                              <% end %>
+
+                                                              <%= link_to reject_booking_form_path(profile_id: @profile.id, id: booking.id) do %>
+                                                                  <i class="fa-solid fa-circle-xmark larger-icon" style="color: red; text-decoration: none;"></i>
+                                                              <% end %>
+                                                          </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer text-muted">
+                                                    Please confirm or decline this booking.
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+
+                            <!-- Accepted Bookings Section -->
+
+                            <div class="accepted-bookings">
+                                <% if @incoming_bookings.any?(&:accepted?) %>
+                                    <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                                    <h4 class="mt-4 mb-4"><i class="fa-solid fa-circle-check me-3"></i>Accepted Incoming Bookings</h4>
+                                    <div class="bookings-scrollable">
+                                        <% @incoming_bookings.select(&:accepted?).each do |booking| %>
+                                            <div class="card mb-3">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <%= image_tag booking.user.avatar.attached? ? booking.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                                    <div class="flex-grow-1">
+                                                        <h5 class="card-title mb-0">Booking from <%= booking.user.profile.name %></h5>
+                                                        <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                                        <p class="card-text"><%= booking.notes %></p>
+                                                    </div>
+                                                    <div>
+                                                        <span>
+                                                            <%= link_to cancel_booking_form_path(profile_id: @profile.id, id: booking.id) do %>
+                                                                <i class="fa-solid fa-ban" style="color: red; text-decoration: none; font-size: 17px;"></i>
+                                                            <% end %>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer text-muted">
+                                                    This booking has been accepted, you can still cancel it.
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+
+                            <!-- Cancelled Bookings Section -->
+
+                            <div class="cancelled-bookings">
+                                <% if @incoming_bookings.any?(&:canceled?) %>
+                                    <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                                    <h4 class="mt-4 mb-4"><i class="fa-solid fa-ban me-3"></i>Cancelled Incoming Bookings</h4>
+                                    <div class="bookings-scrollable">
+                                        <% @incoming_bookings.select(&:canceled?).each do |booking| %>
+                                            <div class="card mb-3">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <%= image_tag booking.user.avatar.attached? ? booking.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                                    <div class="flex-grow-1">
+                                                        <h5 class="card-title mb-0">Booking from <%= booking.user.profile.name %></h5>
+                                                        <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                                        <p class="card-text"><%= booking.notes %></p>
+                                                    </div>
+                                                    <div>
+                                                        <span><i class="fas fa-ban mx-2"></i></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+
+                            <!-- Rejected Bookings Section -->
+                            <hr class="my-4" style="border-top: 2px solid #2E2E2E;">
+                            <div class="rejected-bookings">
+                                <% if @incoming_bookings.any?(&:rejected?) %>
+                                    <h4 class="mt-4 mb-4"><i class="fa-solid fa-circle-xmark me-3"></i>Rejected Incoming Bookings</h4>
+                                    <div class="bookings-scrollable">
+                                        <% @incoming_bookings.select(&:rejected?).each do |booking| %>
+                                            <div class="card mb-3">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <%= image_tag booking.user.avatar.attached? ? booking.user.avatar : "default_avatar.png", class: "rounded-circle booking-avatar mr-3", style: "width: 85px; height: 85px;" %>
+                                                    <div class="flex-grow-1">
+                                                        <h5 class="card-title mb-0">Booking from <%= booking.user.profile.name %></h5>
+                                                        <p class="card-text mb-0">From: <%= booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %> to <%= booking.end_time.strftime("%I:%M %p") %></p>
+                                                        <p class="card-text"><%= booking.notes %></p>
+                                                    </div>
+                                                    <div>
+                                                        <span><i class="fa-regular fa-circle-xmark mx-2"></i></span>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer text-muted">
+                                                    This booking has been rejected.
+                                                </div>
+                                            </div>
+                                        <% end %>
+                                    </div>
+                                <% end %>
+                            </div>
+
+                            <% if current_user.profile.bookings.empty? %>
+                                <div style="display: flex; justify-content:center; align-items: center;">
+                                  <i class="fa-solid fa-face-sad-tear me-3 fax3" style="font-size: 35px;"></i>
+                                  <h3>You have no bookings.</h3>
+                                </div>
+                            <% end %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
 				</div>
 			</div>
 		</div>

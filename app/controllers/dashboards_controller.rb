@@ -9,9 +9,14 @@ class DashboardsController < ApplicationController
   end
 
   def my_bookings
-    @bookings = Booking.all # Adjust this as needed to fetch the bookings relevant to the user
+    @bookings = current_user.profile.bookings.all # Adjust this as needed to fetch the bookings relevant to the user
 
     # Count bookings by status
     @bookings_by_status = @bookings.group_by(&:status).transform_values(&:count)
+
+    # Convert nil keys to "free"
+    if @bookings_by_status.key?(nil)
+      @bookings_by_status["free"] = @bookings_by_status.delete(nil)
+    end
   end
 end

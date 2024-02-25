@@ -1,18 +1,21 @@
-  <%= form_tag(profile_bookings_path(@profile), method: "post") do %>
-    <div class="field">
-      <%= label_tag :start_time, 'Start Time' %>
-      <%= datetime_local_field_tag 'booking[start_time]' %>
-    </div>
+<%= form_tag(profile_bookings_path(@profile), method: "post") do %>
+  <div class="field">
+    <%= label_tag :start_time, 'Start Time' %>
+    <%= datetime_local_field_tag 'booking[start_time]' %>
+  </div>
 
-    <div class="field">
-      <%= label_tag :end_time, 'End Time' %>
-      <%= datetime_local_field_tag 'booking[end_time]' %>
-    </div>
+  <div class="field">
+    <%= label_tag :end_time, 'End Time' %>
+    <%= datetime_local_field_tag 'booking[end_time]' %>
+  </div>
 
-    <div class="field">
-      <%= label_tag :notes, 'Notes' %>
-      <%= text_area_tag 'booking[notes]' %>
-    </div>
+  <div class="field">
+    <%= label_tag :notes, 'Notes' %>
+    <%= text_area_tag 'booking[notes]' %>
+  </div>
 
-    <%= submit_tag 'Create Booking' %>
-  <% end %>
+  <%# Hidden field for recipient_id %>
+  <%= hidden_field_tag 'booking[recipient_id]', @profile.user_id %>
+
+  <%= submit_tag 'Create Booking' %>
+<% end %>

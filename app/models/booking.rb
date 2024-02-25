@@ -1,6 +1,8 @@
 class Booking < ApplicationRecord
   belongs_to :profile
   belongs_to :user
+  belongs_to :recipient, class_name: 'User', foreign_key: 'recipient_id', optional: true
+  belongs_to :sender, class_name: 'User', foreign_key: 'sender_id', optional: true
   validates :start_time, :end_time, presence: true
   validate :end_time_after_start_time
   validate :no_overlap
