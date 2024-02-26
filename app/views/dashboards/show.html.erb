@@ -55,7 +55,7 @@
 								<i class="fa-solid fa-piggy-bank fa-3x me-3 mb-4"></i>
 								<!-- Icon with right margin -->
 								<div>
-									<h3 class="mb-4">$785</h3>
+									<h3 class="mb-4">$<%= rand(1..999) %></h3>
 									<!-- Amount aligned with icon -->
 								</div>
 							</div>
@@ -71,7 +71,7 @@
 								<i class="fa-solid fa-clock fa-3x me-3 mb-4"></i>
 								<!-- Icon with right margin -->
 								<div>
-									<h3 class="mb-4">18:20</h3>
+									<h3 class="mb-4"><%= "%02d:%02d" % [rand(24), rand(60)] %></h3>
 									<!-- Amount aligned with icon -->
 								</div>
 							</div>
@@ -89,7 +89,7 @@
 								<i class="fa-solid fa-magnifying-glass fa-3x me-3 mb-4"></i>
 								<!-- Icon with right margin -->
 								<div>
-									<h3 class="mb-4">1256</h3>
+									<h3 class="mb-4"><%= rand(1..5000) %></h3>
 									<!-- Amount aligned with icon -->
 								</div>
 							</div>
@@ -129,12 +129,15 @@
 			<div class="col-lg-4">
 				<!-- Full-height box -->
 				<div class="card large-box" style="height: 500px; background-color: #F8F9FA; border: 1px solid #ccc;">
-            <div style="width: 100%; height: 600px;"
-                 id = "map"
-                 data-controller="map"
-                 data-map-markers-value="<%= @markers.to_json %>"
-                 data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-            </div>
+              <div class="edit-icon" style="position: absolute; top: 15px; right: 15px; z-index: 1000;">
+                  <button type="button" class="btn btn-light btn-sm"><%= link_to edit_profile_path(@profile), class: "btn btn-custom edit-profile btn-light btn-sm" do %><i class="fa-solid fa-pen-to-square"></i><% end %></button>
+              </div>
+              <div style="width: 100%; height: 600px;"
+                  id = "map"
+                  data-controller="map"
+                  data-map-markers-value="<%= @markers.to_json %>"
+                  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+              </div>
 
 
 
@@ -309,12 +312,12 @@
                             </div>
 
 
-                            <% if current_user.profile.bookings.empty? %>
-                                <div style="display: flex; justify-content:center; align-items: center;">
-                                  <i class="fa-solid fa-face-sad-tear me-3 fax3" style="font-size: 35px;"></i>
-                                  <h3>You have no bookings.</h3>
-                                </div>
-                            <% end %>
+                                <% if current_user.profile.bookings.empty? %>
+                                    <div style="display: flex; justify-content:center; align-items: center;">
+                                      <i class="fa-solid fa-face-sad-tear me-3 fax3" style="font-size: 35px;"></i>
+                                      <h3>You have no more bookings.</h3>
+                                    </div>
+                                <% end %>
                         </div>
                     </div>
                 </div>
@@ -455,7 +458,7 @@
                             <% if current_user.profile.bookings.empty? %>
                                 <div style="display: flex; justify-content:center; align-items: center;">
                                   <i class="fa-solid fa-face-sad-tear me-3 fax3" style="font-size: 35px;"></i>
-                                  <h3>You have no bookings.</h3>
+                                  <h3>You have no more bookings.</h3>
                                 </div>
                             <% end %>
                         </div>

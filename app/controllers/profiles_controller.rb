@@ -3,6 +3,7 @@ class ProfilesController < ApplicationController
 
   def index
     @profiles = Profile.where(is_listed: true)
+    @profile = Profile.new
   end
 
   def new
@@ -30,6 +31,7 @@ class ProfilesController < ApplicationController
         lng: @profile.longitude
       }]
     end
+     @user = User.find(params[:id])
   end
 
   def edit

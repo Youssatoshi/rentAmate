@@ -3,53 +3,216 @@
   <div class="row">
     <!-- Profile Image and Gallery -->
     <div class="col-lg-4">
-      <div class="profile-header mb-3">
-        <% if @profile.user.avatar.attached? %>
-          <img src="<%= url_for(@profile.user.avatar) %>" alt="Avatar" class="profile-avatar img-fluid rounded">
-        <% else %>
-          <img src="<%= @profile.profile_picture_url %>" alt="Avatar" class="profile-avatar img-fluid rounded">
-        <% end %>
-        <div class="gallery">
-          <!-- Repeat this img tag for as many images as you want to show using the same 'otherpics.png' -->
-          <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
-          <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
-          <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
-          <!-- You can duplicate or loop through the above img tag for more images if necessary -->
-        </div>
-      </div>
-    </div>
-    <!-- Profile Details -->
-    <div class="col-lg-4">
-      <div class="card profile-details">
+      <div class="card">
         <div class="card-body">
-          <h1 class="card-title"><%= @profile.name %></h1>
-          <p class="card-text bio"><%= @profile.bio %></p>
-          <p class="card-text bio"><%= @profile.address%></p>
-          <div class="card-text roles">Roles: <%= @profile.roles %></div>
+          <% if @profile.user.avatar.attached? %>
+            <img src="<%= url_for(@profile.user.avatar) %>" alt="Avatar" class="profile-avatar img-fluid rounded-circle">
+          <% else %>
+            <img src="<%= @profile.profile_picture_url %>" alt="Avatar" class="profile-avatar img-fluid rounded-circle">
+          <% end %>
+          <h1 class="card-title my-3"><%= @profile.name %></h1>
+          <p><%= @profile.age %> years old</p>
+          <div class="gallery my-3">
+            <!-- Repeat this img tag for as many images as you want to show using the same 'otherpics.png' -->
+            <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded" onclick="showImage(this.src)">
+            <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded" onclick="showImage(this.src)">
+            <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded" onclick="showImage(this.src)">
+            <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded" onclick="showImage(this.src)">
+          </div>
         </div>
       </div>
     </div>
-    <!-- Map and Reviews -->
-    <div class="col-lg-4">
-      	<div class="card large-box" style="height: 500px; background-color: #F8F9FA; border: 1px solid #ccc;">
+		<div class="col-lg-4">
+				<!-- Small top boxes -->
+				<div class="row mb-2">
+					<div class="col-6">
+						<div class="card" style="height: 100px;  border: 1px solid #ccc; background-color:white;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-comments-dollar fa-3x me-3 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h3 class="my-3"><%= @profile.price %> $/h</h3>
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="card" style="height: 100px; border: 1px solid #ccc; background-color:white;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-clock fa-3x me-3 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h3 class="mb-4"><%= "%02d:%02d" % [rand(24), rand(60)] %></h3>
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+								Hours booked
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+				</div>
+				<div class="row mb-2">
+					<div class="col-6">
+						<div class="card" style="height: 100px;  border: 1px solid #ccc; background-color:white;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-magnifying-glass fa-3x mx-3 me-4 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h3 class="mb-4 ml-2 "><%= rand(1..5000) %></h3>
+
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+								Profile searches
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="card" style="height: 100px; border: 1px solid #ccc; background-color:white;">
+							<div class="d-flex justify-content-start align-items-center h-100 px-3">
+								<i class="fa-solid fa-masks-theater fa-3x me-3 mb-4"></i>
+								<!-- Icon with right margin -->
+								<div>
+									<h4 class="mb-4", style = "font-size:medium"><strong><%=@profile.roles%></strong></h4>
+									<!-- Amount aligned with icon -->
+								</div>
+							</div>
+							<p class="text-center mb-0" style="font-size: 0.75rem; position: absolute; bottom: 10px; width: 100%;">
+								Most booked role
+							</p>
+							<!-- Description at the bottom -->
+						</div>
+					</div>
+				</div>
+				<!-- Large middle box -->
+        <div class="card large-box mt-4" style="height: 265px; border: 1px solid #ccc; display: flex; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; background-color:white; padding: 20px;">
+            <div class="bookings-scrollable">
+                <div class="info-item mb-1" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                    <i class="fa-solid fa-circle-info fa-lg fx2 mr-2 mx-2"></i>
+                    <p class="mb-0" style="flex-grow: 1; text-align: center;">
+                        <% bio_words = @profile.bio.split(' ') %>
+                        <% truncated_bio = bio_words.size > 8 ? bio_words[0..7].join(' ') + '...' : @profile.bio %>
+                        <%= truncated_bio %>
+                    </p>
+                </div>
+                <hr style="width: 100%; height: 1px; border-bottom: 1px solid #2E2E2E;"/>
+                <div class="info-item mb-2" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                    <i class="fa-solid fa-phone fa-lg fx2 mr-2 mx-2"></i>
+                    <p class="mb-0 me-2 " style="flex-grow: 1; text-align: center;"><%= @profile.phone_number %></p>
+                </div>
+                <hr style="width: 100%; height: 1px; border-bottom:  1px solid #2E2E2E; "/>
+                <div class="info-item mb-2" style="display: flex; align-items: center; justify-content: center; width: 100%;">
+                    <i class="fa-regular fa-envelope fa-lg mr-2 mx-2"></i>
+                    <p class="mb-0" style="flex-grow: 1; text-align: center;">Jashcn@gmail.com</p>
+                </div>
+                <hr style=" width: 100%; height: 1px;border-bottom:  1px solid #2E2E2E;"/>
+                <div class="social-icons mt-2 mb-3" style="display: flex; justify-content: center; width: 100%;">
+                    <i class="fa-brands fa-facebook fa-lg mx-2 mt-2"></i>
+                    <i class="fa-brands fa-instagram fa-lg mx-2 mt-2"></i>
+                    <i class="fa-brands fa-twitter fa-lg mx-2 mb-2 mt-2"></i>
+                </div>
+            </div>
+          </div>
+
+
+			</div>
+			<!-- Third column for the large box -->
+			<div class="col-lg-4">
+				<!-- Full-height box -->
+				<div class="card large-box" style="height: 500px; border: 1px solid #ccc;">
             <div style="width: 100%; height: 600px;"
                  id = "map"
                  data-controller="map"
                  data-map-markers-value="<%= @markers.to_json %>"
                  data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
             </div>
-        <!-- Add your map component here -->
 
-      <div class="reviews-container">
-        <!-- Add your reviews section here -->
+        </div>
+  </div>
+</div>
+
+
+<div class="container-fluid my-4">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-body">
+
+          <!-- Review Item -->
+
+
+          <!-- Review Submission Form -->
+         <h5 class="my-4"><i class="fa-solid fa-star"></i>  Submit Your Review</h5>
+          <form class="review-form">
+            <div class="input-group mb-3 " >
+              <textarea class="form-control" id="new-review" rows="3" placeholder="Write your review here..." style="border-radius: 15px;"></textarea>
+            </div>
+            <div class="form-group">
+              <select class="form-control" id="review-stars" style="border-radius: 15px;">
+
+                <option value="5">★★★★★ - Excellent </option>
+                <option value="4">★★★★☆ - Very Good</option>
+                <option value="3">★★★☆☆ - Average</option>
+                <option value="2">★★☆☆☆ - Poor</option>
+                <option value="1">★☆☆☆☆ - Terrible</option>
+
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block mt-4">Submit Review</button>
+          </form>
+
+          <hr style=" width: 100%; height: 1px;border-bottom:  1px solid #2E2E2E;"/>
+
+            <div class="d-flex align-items-start mb-4 mt-4">
+            <!-- Avatar Image -->
+            <img src="<%= asset_path('reviewer.png') %>" alt="Reviewer" class="rounded-circle mr-3 mx-2" style="width: 64px; height: 64px;">
+
+            <div class="flex-grow-1">
+              <!-- Star Rating and Review Text -->
+              <div class="d-flex align-items-start mr-4 mx-2">
+                <span class="text-dark"><i class="fas fa-star"></i></span>
+                <span class="text-dark"><i class="fas fa-star"></i></span>
+                <span class="text-dark"><i class="fas fa-star"></i></span>
+                <span class="text-dark"><i class="fas fa-star"></i></span>
+                <span class="text-dark"><i class="fas fa-star"></i></span>
+              </div>
+              <p class="mr-3 mt-1 mx-2" style="text-align: left;">I do recommend 100%.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="col-md-4">
+      <div class="card">
+        <div class="card-body">
+
+          <%= render 'bookings/new', booking: @booking %>
+
+        </div>
       </div>
     </div>
   </div>
-
-  <!-- Booking Form Section -->
-  <div class="row mt-5">
-    <div class="col-lg-12 text-center">
-      <%= link_to 'Book Now', new_profile_booking_path(@profile), class: 'btn btn-primary' %>
-    </div>
-  </div>
 </div>
+
+
+<style>
+  .gallery-img {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+</style>

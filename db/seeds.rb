@@ -74,6 +74,7 @@ NUM_PROFILES.times do |index|
   ]
   roles = relationship_roles.sample()
   address = address_array.sample()
+  price = rand(1..99)
 
   # Use Geocoder gem to geocode the address and retrieve latitude and longitude
   geocoded_address = Geocoder.search(address).first
@@ -94,7 +95,7 @@ NUM_PROFILES.times do |index|
       age: Faker::Number.between(from: 18, to: 90),
       user: user,  # Associate the profile with the created user
       roles: roles,
-      price: Faker::Number.between(from: 67, to: 420),
+      price: price,
     )
   else
     puts "Failed to geocode address: #{address}"

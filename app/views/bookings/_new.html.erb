@@ -1,0 +1,20 @@
+<%= form_tag(profile_bookings_path(@profile), method: "post", class: "p-4 shadow rounded-lg bg-white") do %>
+  <div class="form-group">
+    <%= label_tag :start_time, 'Start Time', class: 'form-label'  %>
+    <%= datetime_local_field_tag 'booking[start_time]', nil, class: 'form-control' %>
+  </div>
+
+  <div class="form-group my-2">
+    <%= label_tag :end_time, 'End Time', class: 'form-label my-2' %>
+    <%= datetime_local_field_tag 'booking[end_time]', nil, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= label_tag :notes, 'Notes', class: 'form-label' %>
+    <%= text_area_tag 'booking[notes]', nil, class: 'form-control', rows: 4 %>
+  </div>
+
+  <%= hidden_field_tag 'booking[recipient_id]', @profile.user_id %>
+
+  <%= submit_tag 'Create Booking', class: 'btn btn-primary mt-3' %>
+<% end %>
