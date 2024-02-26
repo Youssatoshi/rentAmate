@@ -60,22 +60,47 @@ NUM_PROFILES.times do |index|
     "Benefactor", "Beneficiary"
   ]
 
+  address_array = [
+    "1600 Amphitheatre Parkway, Mountain View, CA 94043, USA",
+
+    "221B Baker Street, London NW1 6XE, United Kingdom",
+    "10 Downing Street, London SW1A 2AA, United Kingdom",
+    "350 Fifth Avenue, New York, NY 10118, USA",
+
+    "Sydney Opera House, Sydney NSW 2000, Australia",
+
+    "Christ the Redeemer, Alto da Boa Vista, Rio de Janeiro - RJ, Brazil",
+    "Great Wall of China, Huairou, China",
+  ]
   roles = relationship_roles.sample()
+  address = address_array.sample()
+
+  # Use Geocoder gem to geocode the address and retrieve latitude and longitude
+  geocoded_address = Geocoder.search(address).first
+  latitude = geocoded_address&.latitude
+  longitude = geocoded_address&.longitude
 
   # Create a new profile associated with the user
-  profile = Profile.create!(
-    name: Faker::Name.name,
-    email: Faker::Internet.email,
-    bio: Faker::Lorem.paragraph(sentence_count: 3),
-    phone_number: Faker::PhoneNumber.phone_number,
-    address: Faker::Address.full_address,
-    profile_picture_url: image_url,
-    age: Faker::Number.between(from: 18, to: 90),
-    user: user,  # Associate the profile with the created user
-    roles: roles,
-    price: Faker::Number.between(from: 67, to: 420),
-  )
+  if latitude && longitude
+    profile = Profile.create!(
+      name: Faker::Name.name,
+      email: Faker::Internet.email,
+      bio: Faker::Lorem.paragraph(sentence_count: 3),
+      phone_number: Faker::PhoneNumber.phone_number,
+      address: address,
+      latitude: latitude,
+      longitude: longitude,
+      profile_picture_url: image_url,
+      age: Faker::Number.between(from: 18, to: 90),
+      user: user,  # Associate the profile with the created user
+      roles: roles,
+      price: Faker::Number.between(from: 67, to: 420),
+    )
+  else
+    puts "Failed to geocode address: #{address}"
+  end
 end
+
 Profile.update_all(is_listed: true)
 puts "All profiles have been updated to be listed."
 puts "Seed data generated successfully!"

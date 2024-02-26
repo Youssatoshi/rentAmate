@@ -1,38 +1,55 @@
 <div class="profile-page container mt-5">
-  <!-- Profile and Gallery Section -->
+  <!-- Top Section - Profile Image, Gallery, and Details -->
   <div class="row">
-    <div class="col-lg-8">
-      <!-- Profile Image and Gallery -->
+    <!-- Profile Image and Gallery -->
+    <div class="col-lg-4">
       <div class="profile-header mb-3">
         <% if @profile.user.avatar.attached? %>
-           <img src="<%= url_for(@profile.user.avatar) %>" alt="Avatar" class="profile-avatar img-fluid rounded">
+          <img src="<%= url_for(@profile.user.avatar) %>" alt="Avatar" class="profile-avatar img-fluid rounded">
         <% else %>
-            <img src="<%= @profile.profile_picture_url %>" alt="Avatar" class="profile-avatar img-fluid rounded">
+          <img src="<%= @profile.profile_picture_url %>" alt="Avatar" class="profile-avatar img-fluid rounded">
         <% end %>
         <div class="gallery">
           <!-- Repeat this img tag for as many images as you want to show using the same 'otherpics.png' -->
           <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
           <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
           <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
-          <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
-          <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
-          <img src="<%= asset_path('otherpics.png') %>" alt="Other Picture" class="gallery-img img-fluid rounded">
           <!-- You can duplicate or loop through the above img tag for more images if necessary -->
         </div>
       </div>
-      <!-- Profile Details Card -->
+    </div>
+    <!-- Profile Details -->
+    <div class="col-lg-4">
       <div class="card profile-details">
         <div class="card-body">
           <h1 class="card-title"><%= @profile.name %></h1>
           <p class="card-text bio"><%= @profile.bio %></p>
-
+          <p class="card-text bio"><%= @profile.address%></p>
           <div class="card-text roles">Roles: <%= @profile.roles %></div>
         </div>
       </div>
     </div>
+    <!-- Map and Reviews -->
+    <div class="col-lg-4">
+      	<div class="card large-box" style="height: 500px; background-color: #F8F9FA; border: 1px solid #ccc;">
+            <div style="width: 100%; height: 600px;"
+                 id = "map"
+                 data-controller="map"
+                 data-map-markers-value="<%= @markers.to_json %>"
+                 data-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
+            </div>
+        <!-- Add your map component here -->
+
+      <div class="reviews-container">
+        <!-- Add your reviews section here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Booking Form Section -->
+  <div class="row mt-5">
+    <div class="col-lg-12 text-center">
+      <%= link_to 'Book Now', new_profile_booking_path(@profile), class: 'btn btn-primary' %>
+    </div>
   </div>
 </div>
-
-
-    <!-- Booking Form Section -->
-<%= link_to 'Book Now', new_profile_booking_path(@profile), class: 'btn btn-primary' %>

@@ -16,12 +16,14 @@
       <label for="user_avatar">Profile Picture:</label>
       <input type="file" id="user_avatar" name="user[avatar]">
 
-      <label for="user_address">Address:</label>
-      <input type="text" id="user_address" name="user[address]" required autocomplete="address-line1">
+
 
       <div class="nested-fields">
         <label for="profile_name">Name:</label>
         <input type="text" id="profile_name" name="user[profile_attributes][name]" required autocomplete="name">
+
+        <label for="profile_address">Address:</label>
+        <input type="text" id="profile_address" name="user[profile_attributes][address]" required autocomplete="address-line1">
 
         <label for="profile_bio">Bio:</label>
         <textarea id="profile_bio" name="user[profile_attributes][bio]" maxlength="1000"></textarea>

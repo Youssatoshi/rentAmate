@@ -6,7 +6,18 @@ class DashboardsController < ApplicationController
     @bookings = current_user.bookings.order(start_time: :asc)
     @incoming_bookings = Booking.joins(:profile).where(profiles: { user_id: current_user.id }).order(start_time: :asc)
     my_bookings
+
+    @markers = []
+    if @profile.present? && @profile.respond_to?(:geocoded?)
+      @profile.geocode if @profile.will_save_change_to_address?
+      @markers = [{
+        lat: @profile.latitude,
+        lng: @profile.longitude
+      }]
+    end
   end
+
+
 
   def my_bookings
     @bookings = current_user.profile.bookings.all # Adjust this as needed to fetch the bookings relevant to the user

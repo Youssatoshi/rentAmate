@@ -11,3 +11,5 @@ pin "stimulus" # @3.2.2
 pin "chartkick" # @5.0.1
 pin "chart.js" # @4.4.1
 pin "@kurkle/color", to: "@kurkle--color.js" # @0.3.2
+pin "mapbox-gl" # @3.1.2
+pin "process" # @2.0.1

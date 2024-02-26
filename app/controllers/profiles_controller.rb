@@ -22,6 +22,14 @@ class ProfilesController < ApplicationController
 
   def show
     @profile = Profile.find(params[:id])
+    @markers = []
+    if @profile.present? && @profile.respond_to?(:geocoded?)
+      @profile.geocode if @profile.will_save_change_to_address?
+      @markers = [{
+        lat: @profile.latitude,
+        lng: @profile.longitude
+      }]
+    end
   end
 
   def edit
@@ -30,9 +38,15 @@ class ProfilesController < ApplicationController
 
   def update
     @profile = Profile.find(params[:id])
-    @profile.update!(profile_params)
-    redirect_to user_dashboard_path
+    if @profile.update(profile_params)
+      @profile.geocode  # Perform geocoding
+      @profile.save     # Save changes to the database
+      redirect_to user_dashboard_path, notice: 'Profile was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
+
 
   # List or Unlist your profile method.
   def toggle_list
@@ -46,6 +60,7 @@ class ProfilesController < ApplicationController
       redirect_to user_dashboard_path
     end
   end
+
 
 
   def destroy
