@@ -1,6 +1,7 @@
 <!-- accept_form.html.erb -->
-
-<%= form_for [@profile, @booking], url: accept_profile_booking_path(profile_id: @profile.id, id: @booking.id), method: :patch do |f| %>
-  <!-- Any form fields or information you want to display -->
-  <%= f.submit 'Accept Booking' %>
-<% end %>
+<div class=form-container>
+    <%= form_for [@profile, @booking], url: accept_profile_booking_path(profile_id: @profile.id, id: @booking.id), method: :patch do |f| %>
+      <!-- Any form fields or information you want to display -->
+      <%= f.submit 'Accept Booking' %>
+    <% end %>
+</div>
