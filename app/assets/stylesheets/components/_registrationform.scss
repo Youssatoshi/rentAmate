@@ -1,73 +1,102 @@
-/* Overall background and font colors */
-body {
-  background-color: white;
-  color: #2E2E2E;
-  font-family: Arial, sans-serif;
+.login {
+  color: #e07a5f;
+  font-weight: bold;
+  margin-right: 10px;
+  text-decoration: none;
+  position: relative;
+  margin-top: 8px;
+  margin-left: 26px;
 }
 
-/* Centering and animating the form container */
 .form-container {
   background-color: #FFFFFF;
   width: 90%;
   max-width: 600px;
   margin: 40px auto;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 16px; /* Increased border-radius */
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.1);
+  border-radius: 16px;
   animation: fadeIn 1s;
+  margin-top: 95px;
 }
 
-/* Ensure uniform input sizes and style adjustments */
 .form-inputs input,
 .form-inputs textarea,
-.form-actions input,
-.form-inputs input[type="file"] { /* Ensuring file input is also styled consistently */
-  width: 100%; /* Adjusted for uniformity */
-  box-sizing: border-box; /* Ensures padding doesn't affect width */
+.form-inputs input[type="file"] {
+  width: 96%;
   padding: 10px;
   margin-bottom: 15px;
-  border: 1px solid #E6A098;
-  border-radius: 4px;
+  border: 1px solid #e07a5f;
+  border-radius: 10px;
 }
 
-.form-inputs label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-/* Nested fields styling */
-.nested-fields {
-  margin-left: 20px;
-}
-
-/* Button styling for uniformity and placement */
-.form-actions input[type="submit"],
-.form-actions .login-button { /* Assuming you add a login button or link with this class */
-  background-color: #E6A098;
-  color: #FFFFFF;
+input::file-selector-button {
   border: none;
-  padding: 10px 20px;
-  display: block; /* Makes it full width */
-  width: calc(100% - 20px); /* Adjust width to match inputs */
-  margin: 0 auto 15px auto; /* Center align and add margin at bottom */
-  text-align: center;
+  font-weight: bold;
+  color: #e07a5f;
+  background-color: white;
   cursor: pointer;
-  border-radius: 4px;
 }
 
-.form-actions input[type="submit"]:hover,
-.form-actions .login-button:hover { /* Hover effect for both buttons and links */
-  background-color: #d98976;
+.form-input-group {
+  font-size: 1.25rem;
+  position: relative;
+  margin-bottom: 4px;
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+.input {
+  all: unset;
+  color: black;
+  padding: 1rem;
+  border: 1px solid #e07a5f;
+  border-radius: 20px;
+  transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Adjust the form title */
+.label {
+  position: absolute;
+  top: 10px;
+  left: 1rem;
+  color: #d4d4d4;
+  pointer-events: none;
+  transition: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.date {
+  color: transparent;
+}
+
+.label-edit {
+  transform: translateY(50%) scale(0.7);
+  background-color: white;
+  color: #e07a5f;
+  margin-left: 10px;
+}
+
+.input:focus {
+  border: 1px solid #e07a5f;
+}
+
+.input:is(:focus, :valid) ~ label {
+  transform: translateY(-80%) scale(0.7);
+  background-color: white;
+  color: #e07a5f;
+}
+
 h2 {
   text-align: center;
-  color: #2E2E2E;
+  color: #444;
+  margin-bottom: 20px;
+  font-weight: bold;
+}
+
+.form-actions{
+  display: flex;
+  justify-content: center;
+}
+
+.forgot-password{
+  margin-top: 15px;
+  text-decoration: none;
+  color: #e07a5f;
 }

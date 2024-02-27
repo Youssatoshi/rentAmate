@@ -1,16 +1,15 @@
 .banner-container {
   text-align: center;
   padding: 40px 0;
-  background-image: asset-url('banner.jpg');; // Update this path as needed
-  background-size: contain; // Ensures the image covers the entire container
+  background-image: asset-url('banner.jpg');;
+  background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
   height: 450px;
-  border-radius: 15px; // Rounds the corners of the container
-  overflow: hidden; // Clips the background image to the container's rounded corners
-  margin: 20px auto; // Example margin for visual separation
-  width: 80%; // Adjust the width as necessary
+  overflow: hidden;
+  width: 100%;
   position:relative;
+  margin-top: 125px;
 }
 
 .banner-content {
@@ -20,7 +19,7 @@
   align-items: center;
   text-align: center;
   max-width: 500px;
-  width: 100%;
+  width: 80%;
   margin: 0 auto;
   padding: 20px;
   background: rgba(248, 237, 235, 0.7);

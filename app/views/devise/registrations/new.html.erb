@@ -1,45 +1,65 @@
 <div class="form-container">
-  <h2>Sign up</h2>
+  <h2>Sign Up</h2>
   <form action="<%= user_registration_path %>" method="post" enctype="multipart/form-data">
     <%= csrf_meta_tags %>
 
     <div class="form-inputs">
-      <label for="user_email">Email:</label>
-      <input type="email" id="user_email" name="user[email]" required autofocus autocomplete="email">
 
-      <label for="user_password">Password:</label>
-      <input type="password" id="user_password" name="user[password]" required autocomplete="new-password">
+      <div class="form-input-group">
+        <input class="input" type="email" id="user_email" name="user[email]" required autofocus autocomplete="email">
+        <label class="label" for="user_email">Email</label>
+      </div>
 
-      <label for="user_password_confirmation">Confirm Password:</label>
-      <input type="password" id="user_password_confirmation" name="user[password_confirmation]" required autocomplete="new-password">
+      <div class="form-input-group">
+        <input class="input" type="password" id="user_password" name="user[password]" required autocomplete="new-password">
+        <label class="label" for="user_password">Password</label>
+      </div>
 
-      <label for="user_avatar">Profile Picture:</label>
-      <input type="file" id="user_avatar" name="user[avatar]">
+      <div class="form-input-group">
+        <input class="input" type="password" id="user_password_confirmation" name="user[password_confirmation]" required autocomplete="new-password">
+        <label class="label" for="user_password_confirmation">Confirm Password</label>
+      </div>
 
+      <div class="form-input-group">
+        <input class="input" type="file" id="user_avatar" name="user[avatar]">
+        <label class="label" for="user_avatar">Profile Picture</label>
+      </div>
 
+      <div class="form-input-group">
+        <input class="input" type="text" id="user_address" name="user[address]" required autocomplete="address-line1">
+        <label class="label" for="user_address">Address</label>
+      </div>
 
       <div class="nested-fields">
-        <label for="profile_name">Name:</label>
-        <input type="text" id="profile_name" name="user[profile_attributes][name]" required autocomplete="name">
 
-        <label for="profile_address">Address:</label>
-        <input type="text" id="profile_address" name="user[profile_attributes][address]" required autocomplete="address-line1">
+        <div class="form-input-group">
+          <input class="input" type="text" id="profile_name" name="user[profile_attributes][name]" required autocomplete="name">
+          <label class="label" for="profile_name">Name</label>
+        </div>
 
-        <label for="profile_bio">Bio:</label>
-        <textarea id="profile_bio" name="user[profile_attributes][bio]" maxlength="1000"></textarea>
+        <div class="form-input-group">
+          <textarea class="input" id="profile_bio" name="user[profile_attributes][bio]" maxlength="1000"></textarea>
+          <label class="label" for="profile_bio">Bio</label>
+        </div>
 
-        <label for="profile_phone_number">Phone Number:</label>
-        <input type="tel" id="profile_phone_number" name="user[profile_attributes][phone_number]" required autocomplete="tel">
 
-        <label for="profile_age">Age:</label>
-        <input type="number" id="profile_age" name="user[profile_attributes][age]" required min="0">
+        <div class="form-input-group">
+          <input class="input" type="tel" id="profile_phone_number" name="user[profile_attributes][phone_number]" required autocomplete="tel">
+          <label class="label" for="profile_phone_number">Phone Number</label>
+        </div>
+
+        <div class="form-input-group">
+          <input class="input" type="number" id="profile_age" name="user[profile_attributes][age]" required min="0">
+          <label class="label" for="profile_age">Age</label>
+        </div>
+
       </div>
     </div>
 
     <div class="form-actions">
-      <input type="submit" value="Sign up">
+      <input class="btn btn-primary" type="submit" value="Sign up">
+      <%= link_to "Log In", new_user_session_path, class: "login" %>
     </div>
   </form>
 
-  <%= render "devise/shared/links" %>
 </div>
