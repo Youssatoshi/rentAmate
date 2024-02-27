@@ -1,14 +1,8 @@
-.my-search-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 20px 0; /* Adjust the margin as needed */
-}
-.box{
+.my-search-container .box {
   position: relative;
 }
 
-.input {
+.my-search-container .input {
   padding: 10px;
   width: 50px;
   height: 50px;
@@ -18,25 +12,28 @@
   box-sizing: border-box;
   font-family: Comic Sans MS;
   font-size: 26px;
-  color:#D3D3D3;
+  color: #D3D3D3;
   outline: none;
   transition: .5s;
 }
-.box:hover input{
+
+.my-search-container .box:hover .input {
   width: 200px;
   background: white;
   border-radius: 10px;
 }
-.box i{
+
+.my-search-container .box i {
   position: absolute;
   top: 50%;
   right: 5px;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   font-size: 20px;
   color: white;
   transition: .2s;
 }
-.box:hover i{
+
+.my-search-container .box:hover i {
   opacity: 0;
   z-index: -1;
 }
@@ -48,7 +45,7 @@
   z-index: 1000; /* Ensures it stays above other content */
 }
 
-.input::placeholder {
-  font-size: 22px; /* Adjust the size as needed */
+.my-search-container .input::placeholder {
+  font-size: 12px; /* Smaller placeholder text for specificity */
   color: #999; /* Optional: change the placeholder text color if needed */
 }
