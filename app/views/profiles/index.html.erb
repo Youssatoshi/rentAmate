@@ -3,6 +3,18 @@
   </div>
 </div>
 
+<div class="my-search-container">
+  <div class="my-search">
+      <div class="box">
+          <form name="search">
+              <input type="text" class="input" name="txt" onmouseover="this.placeholder='e.g city, role, age'" onmouseout="this.placeholder=''">
+          </form>
+          <i class="fas fa-search"></i>
+      </div>
+  </div>
+</div>
+
+
 <div class="container">
   <div class="row">
     <% @profiles.each do |profile| %>

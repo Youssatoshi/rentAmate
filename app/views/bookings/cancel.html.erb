@@ -1,6 +1,31 @@
-<div class=form-container>
+<div class="form-container" style="position: relative; padding: 20px;">
+
+  <!-- Back button with favicon and background color -->
+  <%= link_to user_dashboard_path, class: "back-button", style: "display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 5px; background-color: #DCE0D9; color: #333; text-decoration: none; font-weight: bold;" do %>
+    <i class="fas fa-arrow-left" style="margin-right: 5px;"></i> Back
+  <% end %>
+
   <%= form_for [@profile, @booking], url: cancel_profile_booking_path(profile_id: @profile.id, id: @booking.id), method: :patch do |f| %>
-    <!-- Any form fields or information you want to display -->
-    <%= f.submit 'Cancel Booking' %>
+    <!-- Profile picture centered with shadow -->
+    <div class="profile-picture" style="text-align: center; margin-bottom: 20px;">
+      <%= image_tag @booking.user.avatar.attached? ? url_for(@booking.user.avatar) : "default_avatar.png", class: "rounded-circle booking-avatar", style: "width: 250px; height: 250px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);" %>
+    </div>
+
+    <!-- Confirmation message and booking information -->
+    <div class="booking-info" style="text-align: center; margin-bottom: 20px;">
+      <p>Are you sure you want to cancel this meeting?</p>
+      <h5 class="card-title">Booking from <%= @booking.user.profile.name %></h5>
+      <!-- Booking dates with favicons -->
+      <p class="card-text">
+        <i class="fas fa-calendar-alt"></i> From: <%= @booking.start_time.strftime("%A, %b %d %Y, %I:%M %p") %>
+      </p>
+      <p class="card-text">
+        <i class="fas fa-calendar-check"></i> To: <%= @booking.end_time.strftime("%A, %b %d %Y, %I:%M %p") %>
+      </p>
+      <p class="card-text"><%= @booking.notes %></p>
+    </div>
+
+    <!-- Styled cancel button -->
+    <%= f.submit 'Cancel Booking', class: 'btn btn-warning', style: "display: block; margin: 0 auto; padding: 10px 20px; border: none; background-color: #ffc107; color: black; border-radius: 5px; cursor: pointer;" %>
   <% end %>
 </div>

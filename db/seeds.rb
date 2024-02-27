@@ -80,19 +80,20 @@ NUM_PROFILES.times do |index|
   geocoded_address = Geocoder.search(address).first
   latitude = geocoded_address&.latitude
   longitude = geocoded_address&.longitude
+  complex_bio = "#{Faker::Name.name} was born on #{Faker::Date.backward(days: 15_000)}. #{Faker::Lorem.paragraph(sentence_count: 2)} In their professional life, #{Faker::Name.first_name} has contributed to #{Faker::Company.industry} through #{Faker::Company.name}, where they have been working since #{Faker::Date.backward(days: 1_000)}. Their work primarily focuses on #{Faker::Company.profession}. #{Faker::Lorem.paragraph(sentence_count: 2)}"
 
   # Create a new profile associated with the user
   if latitude && longitude
     profile = Profile.create!(
       name: Faker::Name.name,
       email: Faker::Internet.email,
-      bio: Faker::Lorem.paragraph(sentence_count: 3),
+      bio: complex_bio,
       phone_number: Faker::PhoneNumber.phone_number,
       address: address,
       latitude: latitude,
       longitude: longitude,
       profile_picture_url: image_url,
-      age: Faker::Number.between(from: 18, to: 90),
+      age: Faker::Number.between(from: 18, to: 39),
       user: user,  # Associate the profile with the created user
       roles: roles,
       price: price,
