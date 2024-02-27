@@ -1,56 +1,50 @@
-<div class="container mt-5">
-  <div class="row justify-content-center">
-    <div class="col-md-8">
-      <div class="card">
-        <div class="card-header">
-          <h1 class="text-center">Edit Profile</h1>
-        </div>
-        <div class="card-body">
 
-          <%= form_for(@profile, html: { multipart: true }) do |f| %>
+<div class="form-container">
+  <h2>Edit Profile</h2>
+  <%= form_for(@profile) do |f| %>
+    <%= csrf_meta_tags %>
 
-            <div class="form-group">
-              <label for="name" class="form-label my-3"><i class="fas fa-user"></i> Name</label>
-              <%= f.text_field :name, class: 'form-control', placeholder: 'Enter your name' %>
-            </div>
-
-            <div class="form-group">
-              <label for="phone_number" class="form-label my-3"><i class="fas fa-phone"></i> Phone Number</label>
-              <%= f.telephone_field :phone_number, class: 'form-control', placeholder: 'Enter your phone number' %>
-            </div>
-
-            <div class="form-group">
-              <label for="bio" class="form-label my-3"><i class="fas fa-info-circle"></i> Bio</label>
-              <%= f.text_area :bio, class: 'form-control', placeholder: 'Tell us about yourself' %>
-            </div>
-
-            <div class="form-group">
-              <label for="address" class="form-label my-3"><i class="fas fa-map-marker-alt"></i> Address</label>
-              <%= f.text_field :address, class: 'form-control', placeholder: 'Enter your address' %>
-            </div>
-
-            <div class="form-group">
-              <label for="roles" class="form-label my-3"><i class="fas fa-user-tag"></i> Roles</label>
-              <%= f.text_field :roles, class: 'form-control', placeholder: 'Define your role' %>
-            </div>
-
-            <div class="form-group">
-              <label for="price" class="form-label my-3"><i class="fas fa-dollar-sign"></i> Price</label>
-              <%= f.number_field :price, class: 'form-control', placeholder: 'Set your price' %>
-            </div>
-
-            <div class="form-group">
-              <label for="photo" class="form-label my-4"><i class="fas fa-camera"></i> Photo</label>
-              <%= f.file_field :photo, class: 'form-control-file' %>
-            </div>
-
-            <div class="actions text-center mt-4 ">
-              <%= f.submit 'Update Profile', class: 'btn btn-primary btn-lg' %>
-            </div>
-
-          <% end %>
-        </div>
+    <div class="form-inputs">
+      <div class="form-input-group">
+        <%= f.label :name, class: "label-edit" %>
+        <%= f.text_field :name, class: "input" %>
       </div>
+
+      <div class="form-input-group">
+        <%= f.label :bio, class: "label-edit" %>
+        <%= f.text_area :bio, class: "input", rows: 3 %>
+      </div>
+
+      <div class="form-input-group">
+        <%= f.label :roles, class: "label-edit" %>
+        <%= f.text_field :roles, class: "input" %>
+      </div>
+
+      <div class="form-input-group">
+        <%= f.label :price, class: "label-edit" %>
+        <%= f.number_field :price, class: "input" %>
+      </div>
+
+      <div class="form-input-group">
+        <%= f.label :age, class: "label-edit" %>
+        <%= f.number_field :age, class: "input" %>
+      </div>
+
+      <div class="form-input-group">
+        <%= f.label :phone_number, class: "label-edit" %>
+        <%= f.text_field :phone_number, class: "input" %>
+      </div>
+
+      <div class="form-group">
+        <label for="address" class="label-edit"><i class="fas fa-map-marker-alt"></i> Address</label>
+        <%= f.text_field :address, class: 'input'%>
+      </div>
+
+
     </div>
-  </div>
+
+    <div class="form-actions">
+      <%= f.submit 'Update Profile', class: "btn btn-primary" %>
+    </div>
+  <% end %>
 </div>
